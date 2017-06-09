@@ -22,9 +22,9 @@ public class All_revisions {
 	
 	//StringBuffer
 	public StringBuffer revisions=new StringBuffer();
-	String file_path="D:\\druid.txt";
+	final String file_path="D:\\druid.txt";
 	
-	String file_output_path="D:\\druid_version.txt";
+	final String file_output_path="D:\\druid_version.txt";
 	
 	int totalNumber=0;
 	

@@ -26,11 +26,11 @@ public class calculate_authors {
 	public Set<String> auSet;
 	
 	public String[][] name_number;
-	String Zfile="D:\\commons-io.txt";
-	String file_path="D:\\commons-io-R.txt";
+	public final String Zfile="D:\\commons-io.txt";
+	public final String file_path="D:\\commons-io-R.txt";
 	
-	String Zsave_path="D:\\commons-io_all_authors.txt";
-	String save_path="D:\\commons-io_calculate_authors.txt";
+	public final String Zsave_path="D:\\commons-io_all_authors.txt";
+	public final String save_path="D:\\commons-io_calculate_authors.txt";
 	
 	calculate_authors(){
 		auSet=new HashSet<String>();

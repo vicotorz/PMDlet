@@ -35,10 +35,10 @@ import java.util.ArrayList;
 public class pick_up_refactors {
 
 	// ÎÄ¼þÂ·¾¶
-	String file_path = "D:\\commons-io.txt";
-	String file_output_path = "E:\\commons-io-R.txt";
+	public final String file_path = "D:\\commons-io.txt";
+	public final String file_output_path = "E:\\commons-io-R.txt";
 
-	String fileMark = "E:\\commons-io_mark.txt";
+	public final String fileMark = "E:\\commons-io_mark.txt";
 
 	public int step_forward;
 	ArrayList<String> routeString = new ArrayList<String>();

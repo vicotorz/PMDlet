@@ -15,14 +15,14 @@ import com.csvreader.CsvWriter;
  * junit4 incubator-systemml commons-io druid
  */
 public class brevision {
-	public String file_path = "D:\\commons-ionot-R.txt";// 所有截取的项目版本的有用信息
+	public final String file_path = "D:\\commons-ionot-R.txt";// 所有截取的项目版本的有用信息
 														// not这里要看一下
-	public String f_path = "D:\\commons-io_version.txt";// 所有项目的版本信息
-	public String file_outpath = "D:\\commons-ionot.csv";// 输出文件
+	public final String f_path = "D:\\commons-io_version.txt";// 所有项目的版本信息
+	public final String file_outpath = "D:\\commons-ionot.csv";// 输出文件
 
-	public String all_file_path = "D:\\commons-io.txt";// 整体项目信息
+	public final String all_file_path = "D:\\commons-io.txt";// 整体项目信息
 
-	String useful_versions = "E://commons-ionot/commons-ionot_useful_versions.txt";// 有用版本信息
+	public final String useful_versions = "E://commons-ionot/commons-ionot_useful_versions.txt";// 有用版本信息
 
 	public String versions;
 

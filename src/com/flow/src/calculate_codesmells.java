@@ -29,6 +29,12 @@ import com.csvreader.CsvWriter;
 
 // 记录pmd检测到的去噪的code smells内容
 public class calculate_codesmells {
+	public final int file_number = 28;// 实验总数
+	public final String record_path = "D://junit4not-R.txt";
+	public final String output_file = "D://junit4not-information.csv";
+	public final String p1 = "E://junit4not/";
+	public final String p2 = "/pmd-final-new.txt";
+
 	public ArrayList<String[][]> list;
 
 	public ArrayList<String> version;// 版本
@@ -425,24 +431,18 @@ public class calculate_codesmells {
 		// 121 28 25
 		// fastjson junit4 commons-io
 
-		int file_number = 28;// 实验总数
-		String record_path = "D://junit4not-R.txt";
-		String output_file = "D://junit4not-information.csv";
-		String p1 = "E://junit4not/";
-		String p2 = "/pmd-final-new.txt";
-
 		calculate_codesmells ccs = new calculate_codesmells();
 		// 读取前三项
-		ccs.record_version_author_number(record_path, file_number);
+		ccs.record_version_author_number(ccs.record_path, ccs.file_number);
 		System.out.println("前三项读取完毕");
 
 		System.out.println("版本数量：" + ccs.version.size() + "---作者数量：" + ccs.authors.size() + "---修改记录量："
 				+ ccs.edit.size() + "---重命名数量：" + ccs.rename.size());
 
 		// 后两项
-		for (int fn = 1; fn <= file_number; fn++) {
+		for (int fn = 1; fn <= ccs.file_number; fn++) {
 			// System.out.println("put开始");
-			ccs.put_code_smell_to_Set(p1 + fn + p2);
+			ccs.put_code_smell_to_Set(ccs.p1 + fn + ccs.p2);
 			// System.out.println("put结束");
 		}
 		// System.out.println(ccs.list.size());
@@ -452,7 +452,7 @@ public class calculate_codesmells {
 
 		// 存入
 		// System.out.println(file_number);
-		ccs.saveFile(output_file, file_number);
+		ccs.saveFile(ccs.output_file, ccs.file_number);
 		System.out.println("存入完毕");
 
 		// ccs.showAll(file_number);

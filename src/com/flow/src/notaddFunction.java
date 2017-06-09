@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 public class notaddFunction {
 
-	String path = "E://junit4not/junit4not_useful_version.txt";
-	String allpath = "D://junit4.txt";
+	public final String path = "E://junit4not/junit4not_useful_version.txt";
+	public final String allpath = "D://junit4.txt";
 
-	String R_outputpath = "D://junit4not-R.txt";
+	public final String R_outputpath = "D://junit4not-R.txt";
 	StringBuffer SB = new StringBuffer();// 用于拼接所有useful_version
 
 	String[] uversion;// 拆分之后放入这个数组

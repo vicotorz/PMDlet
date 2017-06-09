@@ -36,17 +36,17 @@ import com.csvreader.CsvWriter;
 public class compare_red {
 	//121 28 25
 	//fastjson   junit4  commons-io
-	int Total_number=28;
+	final int Total_number=28;
 
-	String path = "E://junit4not/";//拼接串1
-	String filename="/pmd-final-new.txt";//拼接串2
+	public final String path = "E://junit4not/";//拼接串1
+	public final String filename="/pmd-final-new.txt";//拼接串2
 	
-	String path_original = "D://junit4not.csv";//csv串
+	public final String path_original = "D://junit4not.csv";//csv串
 	
 	//需要每个文件里都有useful_version文件
-	String useful_versions="E://junit4not/junit4not_useful_version.txt";
+	public final String useful_versions="E://junit4not/junit4not_useful_version.txt";
 	//String file_path = "D://commons-io-R.txt";//所有有关的版本截取--主要用于得到数目
-	String file_outpath = "E://junit4not/junit4not.csv";//最终输出的文件
+	public final String file_outpath = "E://junit4not/junit4not.csv";//最终输出的文件
 	
 	ArrayList<String[]> list;
 

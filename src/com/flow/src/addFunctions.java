@@ -30,7 +30,7 @@ import com.csvreader.CsvWriter;
  */
 public class addFunctions {
 
-	public String path = "D://rule_sets.txt";
+	public final String  path = "D://rule_sets.txt";
 
 	public ArrayList<String> list;// ×°xmlÖ÷Ìâ
 
