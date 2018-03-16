@@ -8,10 +8,13 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 
 /**
- * 2017-3-3 添加一个函数 针对not的情况 输出类似于 fastjson-R这样的文件
- * 
- * 读入random的数组 E://fastjsonnot/fastjsonnot_useful_version.txt 拆除放入到数组
- * 读入所有version的文档 每读入到版本进行判定，如果是 一直写入直到下一个版本开始
+ * 【输入】(1) xxx.txt (2) xxx not_useful_version.txt
+ * 【输出】xxx not-R.txt
+ * 【时间】2017-3-3 
+ * 【作用】添加一个函数 针对not的情况 输出类似于 fastjson-R这样的文件
+ * 【程序思路】
+ * （1）读入random的数组 E://fastjsonnot/fastjsonnot_useful_version.txt 拆除放入到数组
+ * （2）读入所有version的文档 每读入到版本进行判定，如果是 一直写入直到下一个版本开始
  * 
  */
 public class notaddFunction {

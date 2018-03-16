@@ -13,11 +13,10 @@ import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
 
 /**
- * 
- * 统计--检测出的code smell类型
- * 
- * 列：名字 数目 file1增减度 file2增减度 总增减度
- * 
+ * 【输入】xxx-information.csv
+ * 【输出】xxx_total_code_smell_type.txt
+ * 【作用】统计--检测出的code smell类型
+ * 【输出格式】列：code smell名字 | 数目 | file1增减度| file2增减度| 总增减度
  */
 public class count_code_smell_type {
 	public final String intopath = "D:\\junit4-information.csv";
@@ -177,7 +176,7 @@ public class count_code_smell_type {
 		return priority;
 	}
 
-	// 将数组的内容放入到excel中
+	// 最终输出：将数组的内容放入到excel中
 	public void WriteIntoExcel() {
 		// 写入到csv中
 

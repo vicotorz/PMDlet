@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * 2017.2.22 随机选取程序 读入fastjson_version.txt 读入fastjson_userful_version.txt
+ * 【输入】(1) xxx_version.txt (2)xxx_useful_versions.txt  (3)xx-R.txt
+ * 【输出】随机版本
+ * 【作用】输出随机选择的编号
+ * 【时间】2017.2.22 
+ * 【程序流程】
+ * 随机选取程序 读入fastjson_version.txt 读入fastjson_userful_version.txt
  * 在fastjson_version中挑选版本（查看时候已经选过了，或是refactoring里面的版本）
- * 
  * 找到有用的版本以后，还要知道该版本的前一个版本
- * 
- * 这方面的信息也需要输出
  */
 public class random_selected {
 

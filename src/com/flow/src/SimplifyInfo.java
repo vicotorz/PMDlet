@@ -15,31 +15,21 @@ import java.util.regex.Pattern;
 import com.csvreader.CsvWriter;
 
 /**
- * 
- * 2016.12.7 梳理pmd检测到的所有信息名称
- * 
- * 程序任务：重新提取有用信息（前期的rule已经复制粘贴到了统一的文件中）
- * 
- * 检测规则： 如果检测到<ruleset name= 提取出来 key值
- * 
- * 如果检测到name 但不是 <ruleset name= 则提取出来
- * 
- * 最后放到excel中
- * 
- * list存储内容的格式：name priority description 其中<description>有几种形态 1)<d>xxx</d>
- * 
- * 2)<d>xxx </d>
- * 
- * 3)<d> xxx </d>
+ * 【输入】All.txt
+ * 【输出】pmd_info.csv(格式： "名称", "描述", "优先级")
+ * 【时间】2016.12.7 
+ * 【作用】梳理pmd检测到的所有信息名称 
  * 
  */
 public class SimplifyInfo {
+	public static final String path = "E:\\All.txt";
+	public static final String pmd_info_path="D:\\pmd_info.csv";
 	public HashMap<String, ArrayList<String>> map;
 
-	// 读入文件，然后将值放入到Map中
+	// 读入文件，然后prioirty和对应的值将值放入到Map中
 	public void ReadFile() {
 		map = new HashMap<String, ArrayList<String>>();
-		String path = "E:\\All.txt";
+		
 		File f = new File(path);
 		BufferedReader br;
 		try {
@@ -171,7 +161,8 @@ public class SimplifyInfo {
 	// 写入格式 【rulesetName】
 	// name
 	public void WriteFile() {
-		CsvWriter wr = new CsvWriter("D:\\pmd_info.csv", ',', Charset.forName("GBK"));
+		
+		CsvWriter wr = new CsvWriter(pmd_info_path, ',', Charset.forName("GBK"));
 		String[] header = { "名称", "描述", "优先级" };
 		try {
 			wr.writeRecord(header);

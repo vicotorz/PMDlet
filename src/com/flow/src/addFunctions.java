@@ -1,4 +1,5 @@
 package com.flow.src;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,26 +12,26 @@ import java.util.Set;
 import com.csvreader.CsvWriter;
 
 /**
+ * 【输入】rule_sets.txt(事先准备好，准备一份就好)
  * 
- * 2016.11.22
+ * 【时间】2016.11.22
  * 
- * 给检测到的code smell 添加优先级这一列 一共242个检测到的code smells
+ * 【作用】对code_semll_information.csv文件进行读取，然后加列 "code_smell名称", "priority"
  * 
- * 1.先访问123456，拆分 <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic"/>
- * 这个字符串中，获取到design.xml和FinalFieldCouldBeStatic两个字符串
+ * 【程序步骤】给检测到的code smell 添加优先级这一列 一共242个检测到的code smells
  * 
- * 把同是属于同一个xml中的后缀都放到一起
- * 
- * 2.统一访问，然后放到ArrayList中
- * 
- * 3.对code_semll_information.csv文件进行读取，然后加列
+ * (1).先访问123456，拆分 <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic"/>
+ * 这个字符串中，获取到design.xml和FinalFieldCouldBeStatic两个字符串 把同是属于同一个xml中的后缀都放到一起
+ * (2).统一访问，然后放到ArrayList中 (3).对code_semll_information.csv文件进行读取，然后加列
  * 
  * 
- * 操作前提：有rule_sets.txt 以及各种xml文件
+ * 【操作前提】：有rule_sets.txt 以及各种xml文件
  */
 public class addFunctions {
 
-	public final String  path = "D://rule_sets.txt";
+	public final String path = "D:\\rule_sets.txt";
+	public static final String basepath = "D:\\\\";
+	public static final String Csvpath = "D:\\priorities_information.csv";
 
 	public ArrayList<String> list;// 装xml主题
 
@@ -42,10 +43,9 @@ public class addFunctions {
 		return info;
 	}
 
-	addFunctions() {
+	public addFunctions() {
 		list = new ArrayList<String>();
 		list_c = new ArrayList<ArrayList<String>>();
-
 	}
 
 	// 1. 访问拆分
@@ -53,7 +53,6 @@ public class addFunctions {
 	// 两个ArrayList
 	// 前期处理了一下
 	public void splitStrings() {
-
 		File f = new File(path);
 		BufferedReader br;
 		try {
@@ -88,7 +87,6 @@ public class addFunctions {
 
 				}
 				str = br.readLine();
-
 			}
 			list_c.add(al);
 
@@ -96,20 +94,15 @@ public class addFunctions {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	// 2. 对规则进行具体文件访问
 	public void fetechpriorities() {
 		// 访问D盘的xxx
-		String basepath = "D:\\\\";
 		for (int o = 0; o < list.size(); o++) {
 			String path = basepath.concat(list.get(o));
 			priorities(path, o);
-			// Scanner sc=new Scanner(System.in);
-			// sc.nextLine();
 		}
-
 	}
 
 	// 2.1 访问文件
@@ -117,7 +110,6 @@ public class addFunctions {
 	// <rule name="MoreThanOneLogger"
 	// <priority>2</priority>
 	public void priorities(String path, int i) {
-
 		File f = new File(path);
 		BufferedReader br;
 		try {
@@ -127,7 +119,6 @@ public class addFunctions {
 			String name = "";
 			String priority = "";
 			while (string != null) {
-
 				if (string.contains("<rule") && !string.contains("set")) {
 					// 开始
 					// System.out.println(string);
@@ -152,19 +143,15 @@ public class addFunctions {
 				if (string.contains("</rule>")) {
 					// 结束
 					addstring(name, priority, i);
-
 				}
-
 				string = br.readLine();
 			}
 			// Scanner sc=new Scanner(System.in);
 			// sc.nextLine();
-
 		} catch (Exception e) {
 			System.out.println("访问：" + path);
 			e.printStackTrace();
 		}
-
 	}
 
 	// 2.1.1需要调用很多次
@@ -175,9 +162,7 @@ public class addFunctions {
 			if (list_c.get(i).get(n).equals(name)) {
 				String content = list_c.get(i).get(n);
 				String Acontent = content + "-" + priority;
-				// System.out.println(Acontent);
 				list_c.get(i).set(n, Acontent);// 重新设置
-				// System.out.println("%%%"+list_c.get(i).get(n));
 				break;
 			}
 		}
@@ -206,20 +191,19 @@ public class addFunctions {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	// 3.读取文件加列
-	// 【给两个文件后面加列】
-	// information.csv
-	// code_semll_information.csv
-	public void addColumn() {
-
-	}
+//	// 3.读取文件加列
+//	// 【给两个文件后面加列】
+//	// information.csv
+//	// code_semll_information.csv
+//	public void addColumn() {
+//
+//	}
 
 	// 将priorities信息单独存入到csv文件中
 	public void wirtePriority() {
-		CsvWriter wr = new CsvWriter("D:\\priorities_information.csv", ',', Charset.forName("GBK"));
+		CsvWriter wr = new CsvWriter(Csvpath, ',', Charset.forName("GBK"));
 		String[] header = { "code_smell名称", "priority" };
 		try {
 			wr.writeRecord(header);
@@ -237,7 +221,6 @@ public class addFunctions {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void showAll() {
@@ -259,7 +242,6 @@ public class addFunctions {
 		addFunctions af = new addFunctions();
 		af.splitStrings();
 		af.fetechpriorities();
-
 		af.changeArray();
 		af.showAll();
 	}
