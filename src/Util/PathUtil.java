@@ -2,7 +2,7 @@ package Util;
 
 import java.util.HashSet;
 
-//专门存储路径
+//专用存储路径
 public class PathUtil {
 	public final String Path_Root = "E:";
 	public final String RootPath = "E:\\Files/";
@@ -11,7 +11,8 @@ public class PathUtil {
 	public final String csvappendix = ".csv";
 
 	// 【1】pick_up_refactorings
-	// 输入： xxx.txt 输出 ：(1)xxx-R.txt (2)xxx_mark.txt 作用： 挑选出Refactors (3) xxx-R-nonSAR.txt
+	// 输入： xxx.txt 输出 ：(1)xxx-R.txt (2)xxx_mark.txt 作用： 挑选出Refactors (3)
+	// xxx-R-nonSAR.txt
 	public final String file_path = RootPath + filename + appendix;// 从svn的show_log中粘贴出(准备好)
 	public final String R_path_SAR = RootPath + filename + "-R" + appendix;// commons-io-R.txt";
 	public final String R_path_nonSAR = RootPath + filename + "-R-nonSAR" + appendix;// commons-io-R-nonSAR.txt";
