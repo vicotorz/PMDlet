@@ -1,26 +1,28 @@
-package com.flow.src;
+package Tool;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Util.PathUtil;
+
 /**
- * 【输入】(1) xxx_version.txt (2)xxx_useful_versions.txt  (3)xx-R.txt
- * 【输出】随机版本
- * 【作用】输出随机选择的编号
- * 【时间】2017.2.22 
- * 【程序流程】
- * 随机选取程序 读入fastjson_version.txt 读入fastjson_userful_version.txt
- * 在fastjson_version中挑选版本（查看时候已经选过了，或是refactoring里面的版本）
- * 找到有用的版本以后，还要知道该版本的前一个版本
+ * 【输入】(1) xxx_version.txt (2)xxx_useful_versions.txt (3)xx-R.txt 【输出】随机版本
+ * 【作用】输出随机选择的编号 【时间】2017.2.22 【程序流程】 随机选取程序 读入fastjson_version.txt
+ * 读入fastjson_userful_version.txt
+ * 在fastjson_version中挑选版本（查看时候已经选过了，或是refactoring里面的版本） 找到有用的版本以后，还要知道该版本的前一个版本
  */
 public class random_selected {
-
-	public final String path1 = "D:\\junit4_version.txt";
-	public final String path2 = "D:\\junit4_useful_versions.txt";
-	public final String path3 = "D:\\junit4-R.txt";
+	PathUtil pu = new PathUtil();
+	public final String path1 = pu.version_path;// "D:\\junit4_version.txt";
+	public final String path2 = pu.useful_path;// "D:\\junit4_useful_versions.txt";
+	public final String path3 = pu.R_path_SAR;// "D:\\junit4-R.txt";
+	public final String non_SAR_version = pu.for_nonbat_path;// 输出选出的non-SAR版本
 	public int min_num;// 最小
 	public int max_num;// 最大
 	public int random_num;// 需要产生随机数的个数
@@ -171,24 +173,35 @@ public class random_selected {
 	}
 
 	// 对前后版本号进行输出
-	// public void before_now_version(){
-	// StringBuffer sb= new StringBuffer();
-	// for(int i=0;i<useful_version.length;i++){
-	// sb.append(getPreviousVersion(useful_version[i])+"|"+useful_version[i]);
-	// sb.append("\r\n");
-	// }
-	// System.out.println();
-	// System.out.println(sb.toString());
-	// }
+	public void before_now_version() {
+		try {
+			File file = new File(non_SAR_version);
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < useful_version.length; i++) {
+				sb.append(getPreviousVersion(useful_version[i]) + "|" + useful_version[i]);
+				sb.append("\r\n");
+			}
+			String tempStr = sb.toString();
+			System.out.println();
+			System.out.println(tempStr);
+			String[] nonVersions = tempStr.split("|");
+			for (int i = 0; i < nonVersions.length; i++) {
+				bw.write(nonVersions[i]);
+				bw.newLine();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
-		// fastjson junit4 commons-io druid incubator-systemml
-
 		random_selected rs = new random_selected();
 		rs.read_all_version(rs.path1);
-		// rs.read_useful_version(path2);
+		rs.read_useful_version(rs.path2);
 		rs.read_version(rs.path3);
 		rs.random_number();
-		// rs.before_now_version();
+		rs.before_now_version();
 	}
 }

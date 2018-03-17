@@ -14,20 +14,22 @@ import java.util.regex.Pattern;
 import Util.PathUtil;
 
 /**
- * 【输入】pmd-final.txt
- * 【输出】pmd-final-new.txt
- * 【时间】2016-9-8 计算两个字符串匹配次数 【】【】,“Package” ,”File”,”[Priority]
- * ”,”Line(有问题)”,”Description(数字有问题)”, “Rule set”, “Rule” 字符串一共八个部分，一共对比六个部分
- * 【编程思路】(1).先按照File路径存储在list中 存储形式：两个ArrayList<ArrayList<String>> File内容+具体内容
- * (2).对比删除 (3).重新写入文档之中，同时计算差值 【注意事项】缺少明显delete的删除 缺少没有file1，或file2对应的情况会产生干扰
+ * 【输入】pmd-final.txt 【输出】pmd-final-new.txt 【时间】2016-9-8 计算两个字符串匹配次数
+ * 【】【】,“Package” ,”File”,”[Priority] ”,”Line(有问题)”,”Description(数字有问题)”, “Rule
+ * set”, “Rule” 字符串一共八个部分，一共对比六个部分 【编程思路】(1).先按照File路径存储在list中
+ * 存储形式：两个ArrayList<ArrayList<String>> File内容+具体内容 (2).对比删除 (3).重新写入文档之中，同时计算差值
+ * 【注意事项】缺少明显delete的删除 缺少没有file1，或file2对应的情况会产生干扰
  */
 public class match_String {
 	// C://Users/dell/Desktop/fastjsonnot/
 	// E://junit4/
-	PathUtil pu=new PathUtil();
-	public final String path1 =pu.StorePath_Root;// "E://junit4not/";
-	public final String path2 =pu.checkfirstPath;//"/pmd-final.txt";
-	public final String path3 =pu.newFinalPath;//"/pmd-final-new.txt";
+	PathUtil pu = new PathUtil();
+	public final String path1_1 = pu.SAR_StorePath_Root;// "E://junit4not/";
+	public final String path1_2 = pu.non_SARPath_Root;
+	public final String path2_1 = pu.checkfirstPath_SAR;// "/pmd-final.txt";
+	public final String path2_2 = pu.checkfirstPath_nonSAR;
+	public final String path3_1 = pu.newFinalPath_SAR;// "/pmd-final-new.txt";
+	public final String path3_2 = pu.newFinalPath_nonSAR;
 	// public String[] all_str;
 	public ArrayList<ArrayList<String>> list;// list内容 File+具体内容
 
@@ -254,27 +256,41 @@ public class match_String {
 	}
 
 	public static void main(String[] args) {
-		match_String ms=new match_String();
-		PathUtil pu=new PathUtil();
-		for (int fn = 1; fn <= pu.refac_Number; fn++) {
-			System.out.println("处理文件" + fn + "中...");
-			match_String mt = new match_String();
-
-			mt.doFile(ms.path1 + fn + ms.path2);
-			System.out.println("doFile处理完");
-			mt.do_List();
-			System.out.println("do_List处理完");
-			// System.out.println("写入之前检查内容");
-			// for(int i=0;i<mt.list.size();i++){
-			// for(int j=0;j<mt.list.get(i).size();j++){
-			// System.out.println(mt.list.get(i).get(j));
-			// }
-			// }
-			//
-			mt.Rewrite(ms.path1 + fn + ms.path3);
-			System.out.println("重写完成");
-			// 匹配数如果是6，则证明是相同的地方，之后删除。否则不删除
-			// System.out.println(mt.list.get(0).size());
+		match_String ms = new match_String();
+		PathUtil pu = new PathUtil();
+		for (int t = 1; t <= 2; t++) {
+			String temppath;
+			String temppath2;
+			String temppath3;
+			if (t == 1) {
+				System.out.println("开始处理SAR版本");
+				temppath = ms.path1_1;
+				temppath2 = ms.path2_1;
+				temppath3 = ms.path3_1;
+			} else {
+				System.out.println("开始处理non-SAR版本");
+				temppath = ms.path1_2;
+				temppath2 = ms.path2_2;
+				temppath3 = ms.path3_2;
+			}
+			for (int fn = 1; fn <= pu.refac_Number; fn++) {
+				System.out.println("处理文件" + fn + "中...");
+				ms.doFile(temppath + fn + temppath2);
+				System.out.println("doFile处理完");
+				ms.do_List();
+				System.out.println("do_List处理完");
+				// System.out.println("写入之前检查内容");
+				// for(int i=0;i<mt.list.size();i++){
+				// for(int j=0;j<mt.list.get(i).size();j++){
+				// System.out.println(mt.list.get(i).get(j));
+				// }
+				// }
+				//
+				ms.Rewrite(temppath + fn + temppath3);
+				System.out.println("重写完成");
+				// 匹配数如果是6，则证明是相同的地方，之后删除。否则不删除
+				// System.out.println(mt.list.get(0).size());
+			}
 		}
 
 	}

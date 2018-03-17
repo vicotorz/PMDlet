@@ -12,13 +12,14 @@ import com.csvreader.CsvWriter;
 /**
  * 【输入】(1)xx.txt (2) xx_version.txt (3) xx-R.txt
  * 
- * 【输出】 (1)xx_userful_versions.txt (2)xxx.csv 处理填充csv文件中 前一个revision竖行
+ * 【输出】 (1)xx_useful_versions.txt (2)xxx.csv 处理填充csv文件中 前一个revision竖行
  * csv填充所有该填写的信息 (3)xxx_for_bat_versions.txt
  */
 public class brevision {
 	PathUtil pu = new PathUtil();
-	public final String file_path = pu.R_path;// "D:\\commons-ionot-R.txt";//
-												// 所有截取的项目版本的有用信息 // not这里要看一下
+	public final String file_path_SAR = pu.R_path_SAR;// "D:\\commons-ionot-R.txt";//
+	// 所有截取的项目版本的有用信息 // not这里要看一下
+	//public final String file_path_nonSAR = pu.R_path_nonSAR;
 	public final String f_path = pu.version_path;// "D:\\commons-io_version.txt";//
 													// 所有项目的版本信息
 	public final String all_file_path = pu.file_path;// "D:\\commons-io.txt";//
@@ -38,7 +39,7 @@ public class brevision {
 	public int get_total_num() {
 		int number = 0;
 		try {
-			File file = new File(file_path);
+			File file = new File(file_path_SAR);
 			BufferedReader rd = new BufferedReader(new FileReader(file));
 			String line = rd.readLine();
 			while (line != null) {
@@ -59,7 +60,7 @@ public class brevision {
 	public void checkfiles() {
 		try {
 			System.out.println("checkfiles");// 具有refactor关键词的文件
-			File file = new File(file_path);
+			File file = new File(file_path_SAR);
 			File f2 = new File(f_path);
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			BufferedReader r = new BufferedReader(new FileReader(f2));

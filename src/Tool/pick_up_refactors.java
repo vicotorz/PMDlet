@@ -26,12 +26,14 @@ public class pick_up_refactors {
 	PathUtil pu = new PathUtil();
 	// 文件路径
 	public final String file_path = pu.file_path;
-	public final String file_output_path = pu.R_path;
+	public final String file_output_path_SAR = pu.R_path_SAR;
+	public final String file_output_path_nonSAR = pu.R_path_nonSAR;
 	public final String fileMark = pu.fileMark_output_path;
 	public Set StandardSet = pu.addRefactoringKey();
 
 	public int step_forward;
 	ArrayList<String> routeString = new ArrayList<String>();
+	ArrayList<String> nonSAR = new ArrayList<String>();
 
 	// BufferedReader
 	BufferedReader reader;
@@ -53,17 +55,17 @@ public class pick_up_refactors {
 			step_forward = 1;// readLine一行--------就记录一个前进步骤
 
 			while (line != null) {
-				//System.out.println("【读入】--" + line);
+				// System.out.println("【读入】--" + line);
 				// 记录开头的位置
 				if (line.startsWith("版本:")) {
-					//System.out.println("！！！找到[版本]！！！");
+					// System.out.println("！！！找到[版本]！！！");
 					// reader.mark(0);
 					step_forward = 1;
 					flag = true;
 				}
 
 				if (flag) {
-					//System.out.println("【写入】--" + line);
+					// System.out.println("【写入】--" + line);
 					routeString.add(line);
 				}
 
@@ -73,16 +75,16 @@ public class pick_up_refactors {
 
 					line = reader.readLine();
 					step_forward++;
-					//System.out.println("【写入】--" + line);
+					// System.out.println("【写入】--" + line);
 					routeString.add(line);
 
 					if (Judge(line)) {
 						// 找对了
-						//System.out.println(line);
-						//System.out.println("找到REFACTOR信息！！！！");
-						//Scanner inn = new Scanner(System.in);
+						// System.out.println(line);
+						// System.out.println("找到REFACTOR信息！！！！");
+						// Scanner inn = new Scanner(System.in);
 						// showlist();
-						//inn.nextLine();
+						// inn.nextLine();
 						// System.out.println(flag);
 						// routeString.add(line);
 						// record_start_end();
@@ -96,19 +98,19 @@ public class pick_up_refactors {
 				}
 				line = reader.readLine();
 				if (flag) {
-					//System.out.println("前进");
+					// System.out.println("前进");
 					step_forward++;
 				}
 			}
 
 		} catch (Exception e) {
-			//System.out.println("异常");
+			// System.out.println("异常");
 			e.printStackTrace();
 		}
 	}
 
 	public boolean Judge(String line) {
-		//System.out.println("【判断】");
+		// System.out.println("【判断】");
 		// 正则表达式，不区分大小写匹配
 		boolean flag = false;
 		Iterator it = StandardSet.iterator();
@@ -137,6 +139,9 @@ public class pick_up_refactors {
 		// System.out.println("删前查看");
 		// showlist();
 		// System.out.println(routeString.size() + " STEP " + step);
+		for (int i = routeString.size() - step + 1; i <= routeString.size() - 1; i++) {
+			nonSAR.add(routeString.get(i));
+		}
 		for (int i = 0; i <= step - 1; i++) {
 			routeString.remove(routeString.size() - 1);
 		}
@@ -149,7 +154,7 @@ public class pick_up_refactors {
 		try {
 			// Scanner inn=new Scanner(System.in);
 			// inn.nextLine();
-			File outputfile = new File(file_output_path);
+			File outputfile = new File(file_output_path_SAR);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile, true));
 			for (int i = 0; i <= routeString.size() - 1; i++) {
 				// Scanner in=new Scanner(System.in);
@@ -160,6 +165,18 @@ public class pick_up_refactors {
 				writer.write("\r\n");
 			}
 			writer.close();
+
+			File outputfile_nonSAR = new File(file_output_path_nonSAR);
+			BufferedWriter wt = new BufferedWriter(new FileWriter(outputfile_nonSAR, true));
+			for (int i = 0; i <= nonSAR.size() - 1; i++) {
+				// Scanner in=new Scanner(System.in);
+				// in.nextLine();
+				wt.write(nonSAR.get(i));
+				// System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+				// System.out.println("****输出内容：" + routeString.get(i));
+				wt.write("\r\n");
+			}
+			wt.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

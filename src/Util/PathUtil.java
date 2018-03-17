@@ -4,15 +4,17 @@ import java.util.HashSet;
 
 //专门存储路径
 public class PathUtil {
+	public final String Path_Root = "E:";
 	public final String RootPath = "E:\\Files/";
 	public final String filename = "fastjson";
 	public final String appendix = ".txt";
 	public final String csvappendix = ".csv";
 
 	// 【1】pick_up_refactorings
-	// 输入： xxx.txt 输出 ：(1)xxx-R.txt (2)xxx_mark.txt 作用： 挑选出Refactors
-	public final String file_path = RootPath + filename + appendix;// 从svn的show_log中粘贴出
-	public final String R_path = RootPath + filename + "-R" + appendix;// commons-io-R.txt";
+	// 输入： xxx.txt 输出 ：(1)xxx-R.txt (2)xxx_mark.txt 作用： 挑选出Refactors (3) xxx-R-nonSAR.txt
+	public final String file_path = RootPath + filename + appendix;// 从svn的show_log中粘贴出(准备好)
+	public final String R_path_SAR = RootPath + filename + "-R" + appendix;// commons-io-R.txt";
+	public final String R_path_nonSAR = RootPath + filename + "-R-nonSAR" + appendix;// commons-io-R-nonSAR.txt";
 	public final String fileMark_output_path = RootPath + filename + "_mark" + appendix;// commons-io_mark.txt";
 	public HashSet<String> set = new HashSet<String>();
 
@@ -33,34 +35,69 @@ public class PathUtil {
 
 	// 【4】brevision.java
 	// 输入 (1)xx.txt (2) xx_version.txt (3) xx-R.txt
-	// 输出: (1)xx_userful_versions.txt (2)xxx.csv (3) xxx_for_bat_versions.txt
-	//csv中的格式 【 "序号", "前一个版本", "当前版本", "作者", "日期", "作者标注信息", "修改的信息", "前一个版本修改信息", "具体变化的信息"】
+	// 输出: (1)xx_useful_versions.txt (2)xxx.csv (3) xxx_for_bat_versions.txt
+	// csv中的格式 【 "序号", "前一个版本", "当前版本", "作者", "日期", "作者标注信息", "修改的信息",
+	// "前一个版本修改信息", "具体变化的信息"】
 	public final String useful_path = RootPath + filename + "_useful_versions" + appendix;
 	public final String csv_path = RootPath + filename + csvappendix;
-	public final String for_bat_path=RootPath + filename +"_for_bat_versions"+appendix;
-	
-	//【5】根据csv还原版本
-	//【6】pmd分析项目
-	//【7】CopyFileUtil将report移动并重命名
-	//Java_Bat.java
-	//输入：xxx_for_bat_versions.txt
-	//for_bat_path
-	public final String http_path="https://github.com/alibaba/fastjson.git";
-	public final String StorePath_Root="E://GitTest/";
-	public final String Path_Root="E:";
-	public static int refac_Number;//refactoring的个数
-	
-	//【9】compare_excel.java
-	//输入：(1) pmd-report-1.csv (2) pmd-report-2.csv
-	//输出：pmd-final.txt
-	public final String checkfirstPath="/pmd-final.txt";
-	
-	//【10】match_String.java
-	//输入：pmd-final.txt
-	//输出：pmd-final-new.txt
-	//作用：数据清洗
-	public final String newFinalPath="/pmd-final-new.txt";
-	
+	public final String for_bat_path = RootPath + filename + "_for_bat_versions" + appendix;
+
+	// 【4.5】random_selected.java
+	// 作用：随机选出non-SAR版本号
+	// 输入：(1) xxx_version.txt (2)xxx_useful_versions.txt(3)xxx-R.txt
+	// 输出：nonSAR_versions.txt(前一个，后一个版本)
+	// 【nonSAR】
+	public final String for_nonbat_path = RootPath + "nonSAR_versions.txt";
+
+	// 【5】根据csv还原版本
+	// 【6】pmd分析项目,产生report
+	// 【7】CopyFileUtil将report移动并重命名
+	// Java_Bat.java
+	// 输入：xxx_for_bat_versions.txt
+	// for_bat_path
+	// 【SAR】 for_bat_path
+	// 【nonSAR】 for_nonbat_path
+	public final String SAR_filename = "SAR_" + filename;
+	public final String nonSAR_filename = "nonSAR_" + filename;
+	public final String http_path = "https://github.com/alibaba/fastjson.git";
+	public final String SAR_StorePath_Root = Path_Root + SAR_filename + "/";// 存储SAR项目目录
+	public final String non_SARPath_Root = Path_Root + nonSAR_filename + "";// 存储non-SAR项目目录
+
+	public static int refac_Number;// refactoring的个数
+
+	// 【9】compare_excel.java
+	// 输入：(1) pmd-report-1.csv (2) pmd-report-2.csv
+	// 输出：(1) pmd-final-SAR.txt (2) pmd-final-nonSAR.txt
+	// 【SAR】【nonSAR】
+	public final String checkfirstPath_SAR = "/pmd-final-SAR.txt";
+	public final String checkfirstPath_nonSAR = "/pmd-final-nonSAR.txt";
+
+	// 【10】match_String.java
+	// 输入：pmd-final.txt
+	// 输出：pmd-final-new.txt
+	// 作用：数据清洗
+	// 【SAR】【nonSAR】
+	public final String newFinalPath_SAR = "/pmd-final-new-SAR.txt";
+	public final String newFinalPath_nonSAR = "/pmd-final-new-nonSAR.txt";
+
+	// 【11】calculate_codesmell.java
+	// 输入：(1) xxx-R.txt (2) pmd-final-new.txt
+	// 输出：(1) xxx-information.csv (2) xxx-Noninformation.csv
+	public final String info_Path = SAR_StorePath_Root + filename + "-information.csv";
+	public final String non_info_Path = non_SARPath_Root + filename + "-Noninformation.csv";
+
+	// 【11.5】addFunctions.java
+	// 输入：rule_sets.txt
+	// 输出：priorities_information.csv
+	public final String rule_path = RootPath + "rule_sets.txt";
+	public final String Priority_info = RootPath + "priorities_information.csv";
+	// ===============================以上实验结束=========================================
+
+	// 【1】SimplifyInfo.java（一次性）
+	// 输入:All.txt(准备好)
+	// 输出：pmd_info.csv
+	public final String All_path = RootPath + "All.txt";
+	public final String pmd_info_path = RootPath + "pmd_info.csv";
 
 	public HashSet<String> addRefactoringKey() {
 		set.add("refactor");

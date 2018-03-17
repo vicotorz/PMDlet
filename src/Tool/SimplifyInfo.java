@@ -1,4 +1,4 @@
-package com.flow.src;
+package Tool;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 
 import com.csvreader.CsvWriter;
 
+import Util.PathUtil;
+
 /**
  * 【输入】All.txt
  * 【输出】pmd_info.csv(格式： "名称", "描述", "优先级")
@@ -22,8 +24,9 @@ import com.csvreader.CsvWriter;
  * 
  */
 public class SimplifyInfo {
-	public static final String path = "E:\\All.txt";
-	public static final String pmd_info_path="D:\\pmd_info.csv";
+	PathUtil pu=new PathUtil();
+	public final String path =pu.All_path;//"E:\\All.txt";
+	public final String pmd_info_path=pu.pmd_info_path;//"D:\\pmd_info.csv";
 	public HashMap<String, ArrayList<String>> map;
 
 	// 读入文件，然后prioirty和对应的值将值放入到Map中

@@ -1,4 +1,4 @@
-package com.flow.src;
+package Tool;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,9 +11,11 @@ import java.util.Set;
 
 import com.csvreader.CsvWriter;
 
+import Util.PathUtil;
+
 /**
  * 【输入】rule_sets.txt(事先准备好，准备一份就好)
- * 
+ * 【输出】priorities_information.csv
  * 【时间】2016.11.22
  * 
  * 【作用】对code_semll_information.csv文件进行读取，然后加列 "code_smell名称", "priority"
@@ -28,10 +30,10 @@ import com.csvreader.CsvWriter;
  * 【操作前提】：有rule_sets.txt 以及各种xml文件
  */
 public class addFunctions {
-
-	public final String path = "D:\\rule_sets.txt";
-	public static final String basepath = "D:\\\\";
-	public static final String Csvpath = "D:\\priorities_information.csv";
+	PathUtil pu=new PathUtil();
+	public final String path = pu.rule_path;//"D:\\rule_sets.txt";
+	public final String basepath = pu.RootPath;//"D:\\\\";
+	public final String Csvpath = pu.Priority_info;//"D:\\priorities_information.csv";
 
 	public ArrayList<String> list;// 装xml主题
 

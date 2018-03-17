@@ -1,4 +1,4 @@
-package com.flow.src;
+package Useless;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +11,8 @@ import java.util.Set;
 
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
+
+import Tool.addFunctions;
 
 /**
  * 【输入】xxx-information.csv
@@ -32,8 +34,8 @@ public class count_code_smell_type {
 
 	}
 
-	// 放入到集合中
-	// 读入csv文件
+
+	// 读入csv文件，信息放入到集合中
 	public void put_into_set(String path) {
 		System.out.println("输入");
 		System.out.println(path);

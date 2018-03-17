@@ -10,30 +10,33 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.csvreader.CsvWriter;
-import com.flow.src.addFunctions;
+
+import Util.PathUtil;
 
 /**
- * 【输入】(1)xx-R, (2)pmd-final-new.txt
- * 【输出】xx-information.csv
- * 【时间】
- * 10.8(修改 加入了其他指标判断)
- * 10.15修改 增加一个新列 检测到的code smell（file1数量）,检测到的code-smell（file2数量） 对应差值
- * 11.23加入 priority新列
+ * 【输入】(1)xxx-R, (2)pmd-final-new.txt 【输出】xx-information.csv 【时间】 10.8(修改
+ * 加入了其他指标判断) 10.15修改 增加一个新列 检测到的code smell（file1数量）,检测到的code-smell（file2数量）
+ * 对应差值 11.23加入 priority新列
  * 
- * 【作用】记录产生每个版本产生的code semlls类型和数目 
- * 每个实验中的pmd-final-new.txt进行统计
+ * 【作用】记录产生每个版本产生的code semlls类型和数目 每个实验中的pmd-final-new.txt进行统计
  * 
- * 【保存形式】版本 |作者|修改数量|pmd检测到code smell内容|数量|code-smells总数|file1-file2差值|是否有重命名？|priority
+ * 【保存形式】版本 |作者|修改数量|pmd检测到code
+ * smell内容|数量|code-smells总数|file1-file2差值|是否有重命名？|priority
  * 
  */
 
 // 记录pmd检测到的去噪的code smells内容
 public class calculate_codesmells {
-	public final int file_number = 28;// 实验总数
-	public final String record_path = "D://junit4not-R.txt";
-	public final String output_file = "D://junit4not-information.csv";
-	public final String p1 = "E://junit4not/";
-	public final String p2 = "/pmd-final-new.txt";
+	PathUtil pu = new PathUtil();
+	public final int file_number = pu.refac_Number;// 实验总数
+	public final String R_path = pu.R_path_SAR;// "D://junit4not-R.txt";
+	public final String nonR_path = pu.R_path_nonSAR;
+	public final String output_file_SAR = pu.info_Path;// "D://junit4not-information.csv";
+	public final String output_file_nonSAR = pu.non_info_Path;
+	public final String p1_1 = pu.SAR_StorePath_Root;// "E://junit4not/";
+	public final String p1_2 = pu.non_SARPath_Root;
+	public final String p2_1 = pu.newFinalPath_SAR;// "/pmd-final-new.txt";
+	public final String p2_2 = pu.newFinalPath_nonSAR;
 
 	public ArrayList<String[][]> list;
 
@@ -79,9 +82,7 @@ public class calculate_codesmells {
 				// System.out.println(str);
 				// Scanner sc=new Scanner(System.in);
 				// sc.nextLine();
-
 				if (str.startsWith("版本:")) {
-
 					// 有的版本出现没有记录modification的情况
 					if (version.size() != edit.size() && version.size() != rename.size()
 							&& version.size() != addfile.size() && version.size() != deletefile.size() && index != 0) {
@@ -90,10 +91,8 @@ public class calculate_codesmells {
 						addfile.add(0);
 						deletefile.add(0);
 					}
-
 					version.add(str.substring(4, str.length()));
 					index++;
-
 				}
 
 				if (str.startsWith("作者: ")) {
@@ -102,10 +101,8 @@ public class calculate_codesmells {
 
 				if (flag && (str.contains("已修改:") || str.contains("已删除:") || str.contains("已添加:")
 						|| str.contains("重命名:"))) {
-
 					// System.out.println("查找到修改");
 					// Scanner sc=new Scanner(System.in);
-
 					if (str.contains("重命名:")) {
 						// sc.nextLine();
 						g = true;
@@ -229,7 +226,6 @@ public class calculate_codesmells {
 						if (sarray[0].contains("【file2】")) {
 							code_smells[t][3] = String.valueOf(Integer.valueOf(code_smells[t][3]) + 1);
 						}
-
 					}
 					// Scanner sc=new Scanner(System.in);
 					// sc.nextLine();
@@ -427,35 +423,49 @@ public class calculate_codesmells {
 		}
 	}
 
-	public static void main(String[] args) {
-		// 121 28 25
-		// fastjson junit4 commons-io
-
-		calculate_codesmells ccs = new calculate_codesmells();
+	public void Start(String str) {
+		String R_non_path;
+		String path1;
+		String path2;
+		String output_path;
+		if (str.equals("SAR")) {
+			R_non_path = R_path;
+			path1 = p1_1;
+			path2 = p2_1;
+			output_path = output_file_SAR;
+		} else {
+			R_non_path = nonR_path;
+			path1 = p2_1;
+			path2 = p2_2;
+			output_path = output_file_nonSAR;
+		}
 		// 读取前三项
-		ccs.record_version_author_number(ccs.record_path, ccs.file_number);
+		record_version_author_number(R_non_path, file_number);
 		System.out.println("前三项读取完毕");
-
-		System.out.println("版本数量：" + ccs.version.size() + "---作者数量：" + ccs.authors.size() + "---修改记录量："
-				+ ccs.edit.size() + "---重命名数量：" + ccs.rename.size());
-
+		System.out.println("版本数量：" + version.size() + "---作者数量：" + authors.size() + "---修改记录量：" + edit.size()
+				+ "---重命名数量：" + rename.size());
 		// 后两项
-		for (int fn = 1; fn <= ccs.file_number; fn++) {
+		for (int fn = 1; fn <= file_number; fn++) {
 			// System.out.println("put开始");
-			ccs.put_code_smell_to_Set(ccs.p1 + fn + ccs.p2);
+			put_code_smell_to_Set(path1 + fn + path2);
 			// System.out.println("put结束");
 		}
 		// System.out.println(ccs.list.size());
 		// System.out.println(ccs.list.get(0)[0][0]+ccs.list.get(0)[0][1]);
 		System.out.println("后两项读取完毕");
 		// ccs.showAll(file_number);
-
 		// 存入
 		// System.out.println(file_number);
-		ccs.saveFile(ccs.output_file, ccs.file_number);
+		saveFile(output_path, file_number);
 		System.out.println("存入完毕");
-
 		// ccs.showAll(file_number);
+	}
+
+	public static void main(String[] args) {
+		calculate_codesmells ccs = new calculate_codesmells();
+		ccs.Start("SAR");
+		ccs.Start("nonSAR");
+
 	}
 
 }
