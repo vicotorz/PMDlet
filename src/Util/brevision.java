@@ -19,7 +19,7 @@ public class brevision {
 	PathUtil pu = new PathUtil();
 	public final String file_path_SAR = pu.R_path_SAR;// "D:\\commons-ionot-R.txt";//
 	// 所有截取的项目版本的有用信息 // not这里要看一下
-	//public final String file_path_nonSAR = pu.R_path_nonSAR;
+	// public final String file_path_nonSAR = pu.R_path_nonSAR;
 	public final String f_path = pu.version_path;// "D:\\commons-io_version.txt";//
 													// 所有项目的版本信息
 	public final String all_file_path = pu.file_path;// "D:\\commons-io.txt";//
@@ -56,9 +56,11 @@ public class brevision {
 		return number;
 	}
 
-	// 主要是生成一个版本信息的csv文档
+	// 生成一个版本信息的csv文档
 	public void checkfiles() {
+		File batfile = new File(for_bat_path);
 		try {
+			BufferedWriter bat_wr = new BufferedWriter(new FileWriter(batfile));
 			System.out.println("checkfiles");// 具有refactor关键词的文件
 			File file = new File(file_path_SAR);
 			File f2 = new File(f_path);
@@ -106,11 +108,15 @@ public class brevision {
 					System.out.println("sdadasdwefe");
 					contents[version_num - 1][1] = beforeversions;
 					contents[version_num - 1][2] = subver;
+					// 写入bat文件中
+					bat_wr.write(beforeversions);
+					bat_wr.newLine();
+					bat_wr.write(subver);
+					bat_wr.newLine();
 					System.out.println("&&&&&&&&&" + contents[0][0]);
 					System.out.println("contents第一次初始化完毕");
 					System.out.println("！！！！" + version_num + "  " + beforeversions + " " + subver);
 					enter_flag = true;
-
 				}
 				// 需要装入的信息
 				// 【序号】 【前一个版本】 【版本】
@@ -158,6 +164,7 @@ public class brevision {
 			for (int i = 0; i < size; i++) {
 				wr.writeRecord(contents[i]);
 			}
+			bat_wr.close();
 			wr.close();
 			r.close();
 			reader.close();
@@ -226,19 +233,16 @@ public class brevision {
 	public void writeuseful_versions() {
 		System.out.println("记录有用的版本信息");
 		File f = new File(useful_versions);
-		File batfile = new File(for_bat_path);
+
 		try {
 			BufferedWriter wr = new BufferedWriter(new FileWriter(f));
-			BufferedWriter bat_wr = new BufferedWriter(new FileWriter(batfile));
+
 			for (int index = 0; index < Total_number; index++) {
 				// System.out.println(index);
 				wr.write(contents[index][1] + "|" + contents[index][2] + "|");
-				bat_wr.write(contents[index][1]);
-				bat_wr.newLine();
-				bat_wr.write(contents[index][2]);
 			}
 			wr.close();
-			bat_wr.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

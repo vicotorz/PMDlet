@@ -61,8 +61,8 @@ public class PathUtil {
 	public final String SAR_filename = "SAR_" + filename;
 	public final String nonSAR_filename = "nonSAR_" + filename;
 	public final String http_path = "https://github.com/alibaba/fastjson.git";
-	public final String SAR_StorePath_Root = Path_Root + SAR_filename + "/";// 存储SAR项目目录
-	public final String non_SARPath_Root = Path_Root + nonSAR_filename + "";// 存储non-SAR项目目录
+	public final String SAR_StorePath_Root = Path_Root + "\\\\" + SAR_filename + "/";// 存储SAR项目目录
+	public final String non_SARPath_Root = Path_Root + "\\\\" + nonSAR_filename + "";// 存储non-SAR项目目录
 
 	public static int refac_Number;// refactoring的个数
 
@@ -118,6 +118,7 @@ public class PathUtil {
 		set.add("add");
 		set.add("parameterize");
 		set.add("preserve");
+		set.add("pull");
 		set.add("pull up");
 		set.add("pull down");
 		set.add("callapse");
