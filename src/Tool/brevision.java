@@ -1,4 +1,4 @@
-package Util;
+package Tool;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.nio.charset.Charset;
 
 import com.csvreader.CsvWriter;
+
+import Util.PathUtil;
 
 /**
  * °æ ‰»Î°ø(1)xx.txt (2) xx_version.txt (3) xx-R.txt

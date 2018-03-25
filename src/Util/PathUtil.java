@@ -75,7 +75,7 @@ public class PathUtil {
 
 	// 【10】match_String.java
 	// 输入：pmd-final.txt
-	// 输出：pmd-final-new.txt
+	// 输出：pmd-final-new.txt(pmd-final-new-SAR.txt,pmd-final-new-nonSAR.txt)
 	// 作用：数据清洗
 	// 【SAR】【nonSAR】
 	public final String newFinalPath_SAR = "/pmd-final-new-SAR.txt";
