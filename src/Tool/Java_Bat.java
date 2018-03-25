@@ -80,15 +80,16 @@ public class Java_Bat {
 			// Runtime runtime = Runtime.getRuntime();
 			br.write(Path_Root);// E:
 			br.newLine();
+			int step=1;
 			for (int i = 0; i < Number; i=i+2) {
 				String cdroot = Path_Root;
 				int ver = 0;
 				for (int j = 1; j <= 2; j++) {
 					ver = (j == 1 ? i : i + 1);
-					String changedic = "cd " + root + String.valueOf(j);// 切换到E://GitTest/j
+					String changedic = "cd " + root + step;// 切换到E://GitTest/i
 					String download = "git clone " + http_path + " " + version_number[ver];// 下载代码
 					String rename = "ren " + version_number[ver] + " [" + String.valueOf(j) + "]" + version_number[ver];// 改名
-					String check_path = root + "[" + String.valueOf(j) + "]" + version_number[ver];
+					String check_path = root +step+"/"+"[" + String.valueOf(j) + "]" + version_number[ver];
 					// 移动准备
 					String check = "pmd.bat -d " + check_path + " -R java-basic -f csv -r " + check_path
 							+ "/report.csv";
@@ -100,6 +101,7 @@ public class Java_Bat {
 				String returncom = "cd ..";// 回退到 E://GitTest/i/
 				br.write(returncom);
 				br.newLine();
+				step++;
 			}
 			br.close();
 			// 执行bat文件
@@ -127,7 +129,7 @@ public class Java_Bat {
 	// pmd-report-2
 	public void copyUtil(String root) {
 		CopyFileUtil cfu = new CopyFileUtil();
-		for (int i = 0; i < Number; i++) {
+		for (int i = 0; i < Number/2; i++) {
 			String rootpath = root + String.valueOf(i + 1);// 上一级目录
 			for (int j = 1; j <= 2; j++) {
 				String path = root + String.valueOf(i + 1) + "/" + "[" + String.valueOf(j) + "]" + version_number[i];// 下一级目录
@@ -148,7 +150,7 @@ public class Java_Bat {
 	public void StartBat(String root) {
 		System.out.println("开始创建目录");
 		String mkDirectoryPath;
-		for (int i = 1; i <= Number; i++) {
+		for (int i = 1; i <= Number/2; i++) {
 			// for (int j = 1; j <= 2; j++) {+ "/" + String.valueOf(j)
 			// 创建目录
 			mkDirectoryPath = root + String.valueOf(i);
