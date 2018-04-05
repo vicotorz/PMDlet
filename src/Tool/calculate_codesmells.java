@@ -34,7 +34,7 @@ public class calculate_codesmells {
 	public final String output_file_SAR = pu.info_Path;// "D://junit4not-information.csv";
 	public final String output_file_nonSAR = pu.non_info_Path;
 	public final String p1_1 = pu.SAR_StorePath_Root;// "E://junit4not/";
-	public final String p1_2 = pu.non_SARPath_Root;
+	public final String p1_2 = pu.nonSAR_StorePath_Root;
 	public final String p2_1 = pu.newFinalPath_SAR;// "/pmd-final-new.txt";
 	public final String p2_2 = pu.newFinalPath_nonSAR;
 
@@ -51,7 +51,7 @@ public class calculate_codesmells {
 
 	public String[][] ss;
 
-	calculate_codesmells() {
+	public calculate_codesmells() {
 		list = new ArrayList<String[][]>();
 		version = new ArrayList<String>();
 		authors = new ArrayList<String>();

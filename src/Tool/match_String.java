@@ -25,7 +25,7 @@ public class match_String {
 	// E://junit4/
 	PathUtil pu = new PathUtil();
 	public final String path1_1 = pu.SAR_StorePath_Root;// "E://junit4not/";
-	public final String path1_2 = pu.non_SARPath_Root;
+	public final String path1_2 = pu.nonSAR_StorePath_Root;
 	public final String path2_1 = pu.checkfirstPath_SAR;// "/pmd-final.txt";
 	public final String path2_2 = pu.checkfirstPath_nonSAR;
 	public final String path3_1 = pu.newFinalPath_SAR;// "/pmd-final-new.txt";
@@ -255,8 +255,7 @@ public class match_String {
 		}
 	}
 
-	public static void main(String[] args) {
-		match_String ms = new match_String();
+	public void startMatch() {
 		PathUtil pu = new PathUtil();
 		for (int t = 1; t <= 2; t++) {
 			String temppath;
@@ -264,20 +263,20 @@ public class match_String {
 			String temppath3;
 			if (t == 1) {
 				System.out.println("开始处理SAR版本");
-				temppath = ms.path1_1;
-				temppath2 = ms.path2_1;
-				temppath3 = ms.path3_1;
+				temppath = path1_1;
+				temppath2 = path2_1;
+				temppath3 = path3_1;
 			} else {
 				System.out.println("开始处理non-SAR版本");
-				temppath = ms.path1_2;
-				temppath2 = ms.path2_2;
-				temppath3 = ms.path3_2;
+				temppath = path1_2;
+				temppath2 = path2_2;
+				temppath3 = path3_2;
 			}
 			for (int fn = 1; fn <= pu.refac_Number; fn++) {
 				System.out.println("处理文件" + fn + "中...");
-				ms.doFile(temppath + fn + temppath2);
+				doFile(temppath + fn + temppath2);
 				System.out.println("doFile处理完");
-				ms.do_List();
+				do_List();
 				System.out.println("do_List处理完");
 				// System.out.println("写入之前检查内容");
 				// for(int i=0;i<mt.list.size();i++){
@@ -286,12 +285,17 @@ public class match_String {
 				// }
 				// }
 				//
-				ms.Rewrite(temppath + fn + temppath3);
+				Rewrite(temppath + fn + temppath3);
 				System.out.println("重写完成");
 				// 匹配数如果是6，则证明是相同的地方，之后删除。否则不删除
 				// System.out.println(mt.list.get(0).size());
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		match_String ms = new match_String();
+		ms.startMatch();
 
 	}
 

@@ -249,6 +249,11 @@ public class brevision {
 			e.printStackTrace();
 		}
 	}
+	
+	public void startBreVision(){
+		checkfiles();
+		writeuseful_versions();
+	}
 
 	public static void main(String[] args) {
 		brevision b = new brevision();

@@ -22,7 +22,7 @@ import Util.PathUtil;
 public class compare_excel {
 	PathUtil pu = new PathUtil();
 	public final String SAR_Path = pu.SAR_StorePath_Root;// 拼接串1.1
-	public final String nonSAR_Path = pu.non_SARPath_Root;// 拼接串1.2
+	public final String nonSAR_Path = pu.nonSAR_StorePath_Root;// 拼接串1.2
 	public final String filename_SAR = pu.checkfirstPath_SAR;// 拼接串2.1
 	public final String filename_nonSAR = pu.checkfirstPath_nonSAR;// 拼接串2.2
 
@@ -42,7 +42,7 @@ public class compare_excel {
 	String path2;
 	String path3;
 
-	compare_excel() {
+	public compare_excel() {
 		set1 = new HashSet<String>();
 		set2 = new HashSet<String>();
 		N_instersection_set1 = new HashSet<String>();
@@ -369,6 +369,36 @@ public class compare_excel {
 		}
 	}
 
+	public void startCompare() {
+		for (int t = 1; t <= 2; t++) {
+			String temppath;
+			String filename;
+			if (t == 1) {
+				temppath = SAR_Path;
+				filename = filename_SAR;
+				System.out.println("开始分析SAR版本");
+			} else {
+				temppath = nonSAR_Path;
+				filename = filename_nonSAR;
+				System.out.println("开始分析nonSAR版本");
+			}
+			for (int i = 1; i <= pu.refac_Number; i++) {
+				String p1 = temppath + i + "/pmd-report-1.csv";
+				String p2 = temppath + i + "/pmd-report-2.csv";
+				String p3 = temppath + i + filename;
+				// System.out.println(p1);
+				// System.out.println(p2);
+				// System.out.println(p3);
+				pre_file(p1, p2, p3);
+				initset();
+				// e.showAll();
+				Start();
+				System.out.println("处理完毕" + i);
+				final_actions();
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		PathUtil pu = new PathUtil();
 		// fastjson 1-121
@@ -389,34 +419,7 @@ public class compare_excel {
 
 		// e.final_actions();
 		compare_excel e = new compare_excel();
-		for (int t = 1; t <= 2; t++) {
-			String temppath;
-			String filename;
-			if (t == 1) {
-				temppath = e.SAR_Path;
-				filename = e.filename_SAR;
-				System.out.println("开始分析SAR版本");
-			} else {
-				temppath = e.nonSAR_Path;
-				filename = e.filename_nonSAR;
-				System.out.println("开始分析nonSAR版本");
-			}
-			for (int i = 1; i <= pu.refac_Number; i++) {
-				String p1 = temppath + i + "/pmd-report-1.csv";
-				String p2 = temppath + i + "/pmd-report-2.csv";
-				String p3 = temppath + i + filename;
-				// System.out.println(p1);
-				// System.out.println(p2);
-				// System.out.println(p3);
-				e.pre_file(p1, p2, p3);
-				e.initset();
-				// e.showAll();
-				e.Start();
-				System.out.println("处理完毕" + i);
-				e.final_actions();
-			}
-		}
-
+		e.startCompare();
 	}
 
 }

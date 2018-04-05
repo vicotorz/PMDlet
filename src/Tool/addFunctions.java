@@ -239,12 +239,16 @@ public class addFunctions {
 			e.printStackTrace();
 		}
 	}
+	
+	public void startAddFunction(){
+		splitStrings();
+		fetechpriorities();
+		changeArray();
+		showAll();
+	}
 
 	public static void main(String[] args) {
 		addFunctions af = new addFunctions();
-		af.splitStrings();
-		af.fetechpriorities();
-		af.changeArray();
-		af.showAll();
+		af.startAddFunction();
 	}
 }

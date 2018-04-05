@@ -196,12 +196,16 @@ public class random_selected {
 		}
 	}
 
+	public void startRandom() {
+		read_all_version(path1);
+		read_useful_version(path2);
+		read_version(path3);
+		random_number();
+		before_now_version();
+	}
+
 	public static void main(String[] args) {
 		random_selected rs = new random_selected();
-		rs.read_all_version(rs.path1);
-		rs.read_useful_version(rs.path2);
-		rs.read_version(rs.path3);
-		rs.random_number();
-		rs.before_now_version();
+		rs.startRandom();
 	}
 }

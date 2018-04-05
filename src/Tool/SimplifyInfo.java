@@ -17,22 +17,20 @@ import com.csvreader.CsvWriter;
 import Util.PathUtil;
 
 /**
- * 【输入】All.txt
- * 【输出】pmd_info.csv(格式： "名称", "描述", "优先级")
- * 【时间】2016.12.7 
- * 【作用】梳理pmd检测到的所有信息名称 
+ * 【输入】All.txt 【输出】pmd_info.csv(格式： "名称", "描述", "优先级") 【时间】2016.12.7
+ * 【作用】梳理pmd检测到的所有信息名称
  * 
  */
 public class SimplifyInfo {
-	PathUtil pu=new PathUtil();
-	public final String path =pu.All_path;//"E:\\All.txt";
-	public final String pmd_info_path=pu.pmd_info_path;//"D:\\pmd_info.csv";
+	PathUtil pu = new PathUtil();
+	public final String path = pu.All_path;// "E:\\All.txt";
+	public final String pmd_info_path = pu.pmd_info_path;// "D:\\pmd_info.csv";
 	public HashMap<String, ArrayList<String>> map;
 
 	// 读入文件，然后prioirty和对应的值将值放入到Map中
 	public void ReadFile() {
 		map = new HashMap<String, ArrayList<String>>();
-		
+
 		File f = new File(path);
 		BufferedReader br;
 		try {
@@ -164,7 +162,7 @@ public class SimplifyInfo {
 	// 写入格式 【rulesetName】
 	// name
 	public void WriteFile() {
-		
+
 		CsvWriter wr = new CsvWriter(pmd_info_path, ',', Charset.forName("GBK"));
 		String[] header = { "名称", "描述", "优先级" };
 		try {
@@ -215,15 +213,19 @@ public class SimplifyInfo {
 		}
 	}
 
+	public void startSimplifyInfo() {
+		System.out.println("1");
+		ReadFile();
+		System.out.println("2");
+		showAll();
+		WriteFile();
+	}
+
 	// list中第一个是ruleset的描述 其他依次顺序为 名称 描述 优先级
 	public static void main(String[] args) {
 
 		SimplifyInfo sfi = new SimplifyInfo();
-		System.out.println("1");
-		sfi.ReadFile();
-		System.out.println("2");
-		sfi.showAll();
-		sfi.WriteFile();
+		sfi.startSimplifyInfo();
 
 	}
 

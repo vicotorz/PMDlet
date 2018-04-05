@@ -16,7 +16,7 @@ import Util.PathUtil;
  * (2)xxx_calculate_authors.txt 【作用】 记录分析出有自称认重构作者信息
  **/
 
-public class calculate_authors {
+public class calculateAuthors {
 	PathUtil pu = new PathUtil();
 	public Set<String> auSet;
 
@@ -27,7 +27,7 @@ public class calculate_authors {
 	public final String Zsave_path = pu.Zsave_path;
 	public final String save_path = pu.save_path;
 
-	calculate_authors() {
+	public calculateAuthors() {
 		auSet = new HashSet<String>();
 	}
 
@@ -167,13 +167,17 @@ public class calculate_authors {
 			e.printStackTrace();
 		}
 	}
+	
+	public void startCal(){
+		cal_authors();
+		cal();
+		System.out.println(auSet.size());
+		System.out.println(name_number.length);
+		saveFile();
+	}
 
 	public static void main(String[] args) {
-		calculate_authors ca = new calculate_authors();
-		ca.cal_authors();
-		ca.cal();
-		System.out.println(ca.auSet.size());
-		System.out.println(ca.name_number.length);
-		ca.saveFile();
+		calculateAuthors ca = new calculateAuthors();
+		ca.startCal();
 	}
 }

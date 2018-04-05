@@ -40,9 +40,6 @@ public class pick_up_refactors {
 
 	ArrayList<String> marklist = new ArrayList<String>();// 用来记录自重构标签
 
-	pick_up_refactors() {
-	}
-
 	// 1.找具有refactor的信息
 	public void search_step() {
 		// 创建文件
@@ -201,15 +198,19 @@ public class pick_up_refactors {
 		}
 	}
 
+	public void startPick() {
+		System.out.println("1");
+		search_step();
+		System.out.println("2");
+		record_start_end();
+		System.out.println("3");
+		recordSelfMark();
+	}
+
 	// 主函数
 	public static void main(String[] args) {
 		pick_up_refactors r = new pick_up_refactors();
-		System.out.println("1");
-		r.search_step();
-		System.out.println("2");
-		r.record_start_end();
-		System.out.println("3");
-		r.recordSelfMark();
+		r.startPick();
 	}
 
 }

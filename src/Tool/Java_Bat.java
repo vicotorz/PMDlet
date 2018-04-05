@@ -10,9 +10,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import Util.CopyFileUtil;
 import Util.PathUtil;
+import Util.mkDirectory;
 
 //【时间】2018.3.16
 public class Java_Bat {
@@ -22,12 +25,16 @@ public class Java_Bat {
 	public final String http_path = pu.http_path;
 	public final String path = pu.for_bat_path;// SAR
 	public final String SAR_StorePath_root = pu.SAR_StorePath_Root;
-	public final String non_SARPath_Root = pu.non_SARPath_Root;
+	public final String nonSAR_StorePath_Root = pu.nonSAR_StorePath_Root;
 	public final String Path_Root = pu.Path_Root;
 	public String[] version_number;
 	public int Number;
 
-	public final String gitbat = "E://Files/download_rename_check.bat";
+	public final String gitbatroot = pu.gitbatroot;
+	public final String FinalBat = pu.finalbat;
+
+	public final String gitnonbatroot = pu.nonbatroot;
+	public final String nonFinalbat = pu.nonfinalbat;
 
 	// 读入版本信息
 	public void readVersions() {
@@ -54,127 +61,134 @@ public class Java_Bat {
 		System.out.println("获取完毕");
 	}
 
-	// 创建文件夹
-	public static boolean mkDirectory(String path) {
-		File file = null;
-		try {
-			file = new File(path);
-			if (!file.exists()) {
-				return file.mkdirs();
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-		} finally {
-			file = null;
-		}
-		return false;
-	}
-
 	// 根据版本信息，调用git下载
-	public void GitDownLoad(String root) {
-		File file = new File(gitbat);
+	public void GitDownLoad(String root, String mark) {
 		System.out.println("开始进入下载环节");
 		try {
-			BufferedWriter br = new BufferedWriter(new FileWriter(file));
+			///////////////// 创建bat文件////////////////////////
 			// Runtime runtime = Runtime.getRuntime();
-			br.write(Path_Root);// E:
-			br.newLine();
-			int step=1;
-			for (int i = 0; i < Number; i=i+2) {
+			StringBuffer batchBatCommand = new StringBuffer();
+			File batfile;
+			if (mark.equals("SAR")) {
+				batfile = new File(FinalBat);
+			} else {
+				batfile = new File(nonFinalbat);
+			}
+			BufferedWriter batbw = new BufferedWriter(new FileWriter(batfile));
+			for (int i = 1; i <= Number / 2; i++) {
+				String batFilePath;
+				if (mark.equals("SAR")) {
+					batFilePath = gitbatroot + "_" + i + ".bat";
+				} else {
+					batFilePath = gitnonbatroot + "_" + i + ".bat";
+				}
+				batchBatCommand.append(batFilePath + " & ");
+				File file = new File(batFilePath);
+				BufferedWriter br = new BufferedWriter(new FileWriter(file));
+				br.write(Path_Root);// E:
+				br.newLine();
 				String cdroot = Path_Root;
+				StringBuffer command = new StringBuffer();
 				int ver = 0;
 				for (int j = 1; j <= 2; j++) {
 					ver = (j == 1 ? i : i + 1);
-					String changedic = "cd " + root + step;// 切换到E://GitTest/i
+					String changedic = "cd " + root + i;// 切换到E://GitTest/i
 					String download = "git clone " + http_path + " " + version_number[ver];// 下载代码
 					String rename = "ren " + version_number[ver] + " [" + String.valueOf(j) + "]" + version_number[ver];// 改名
-					String check_path = root +step+"/"+"[" + String.valueOf(j) + "]" + version_number[ver];
-					// 移动准备
-					String check = "pmd.bat -d " + check_path + " -R java-basic -f csv -r " + check_path
+					String check_path = root + i + "/" + "[" + String.valueOf(j) + "]" + version_number[ver];
+					String check = "pmd.bat -d " + check_path + " -R java-basic -f csv -r " + check_path// 移动准备
 							+ "/report.csv";
-					String command = changedic + " && " + download + " && " + rename + " && " + check;
+					command.append(changedic + " && " + download + " && " + rename + " && " + check);
+					if (j == 1) {
+						command.append(" & ");
+					}
 					System.out.println(command);
-					br.write(command);
-					br.newLine();
 				}
-				String returncom = "cd ..";// 回退到 E://GitTest/i/
-				br.write(returncom);
-				br.newLine();
-				step++;
+				br.write(command.toString());
+				br.close();
 			}
-			br.close();
-			// 执行bat文件
-			System.out.println("开始执行bat文件");
-			String bat_start = "cmd /c start " + gitbat;
-			Process pr = Runtime.getRuntime().exec(bat_start);
-
-			InputStream in = pr.getInputStream();
-			BufferedReader BR = new BufferedReader(new InputStreamReader(in));
-			String tmp = null;
-			while ((tmp = BR.readLine()) != null) {
-				// pr.waitFor();
-				System.out.println("请等待");
-			}
-			System.out.println("脚本执行完毕，开始移动文件");
-			copyUtil(root);
-			System.out.println("移动完毕");
+			batbw.write(batchBatCommand.toString());
+			batbw.close();
+			System.out.println("写入脚本完毕");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	// 将xx://yy/[1-9]/[1|2]中的report.csv 复制到 xx://yy/[1-9] 中并重命名 pmd-report-1 /
-	// pmd-report-2
-	public void copyUtil(String root) {
-		CopyFileUtil cfu = new CopyFileUtil();
-		for (int i = 0; i < Number/2; i++) {
-			String rootpath = root + String.valueOf(i + 1);// 上一级目录
-			for (int j = 1; j <= 2; j++) {
-				String path = root + String.valueOf(i + 1) + "/" + "[" + String.valueOf(j) + "]" + version_number[i];// 下一级目录
-				String srcFileName = path + "/report.csv";
-				String destFileName;
-				if (path.toString().contains("[1]")) {
-					destFileName = rootpath + "/pmd-report-1.csv";
-				} else {
-					destFileName = rootpath + "/pmd-report-2.csv";
-				}
-				// 待复制的文件名，目标文件名，如果目标文件存在，是否覆盖
-				cfu.copyFile(srcFileName, destFileName, true);
-			}
-		}
-	}
+	// 执行单独脚本
+	// public void ExecBat(String path) {
+	// System.out.println(path);
+	// try {
+	// Process pr = Runtime.getRuntime().exec(path);
+	// InputStream in = pr.getInputStream();
+	// BufferedReader BR = new BufferedReader(new InputStreamReader(in));
+	// String tmp = null;
+	// // while ((tmp = BR.readLine()) != null) {
+	// // pr.waitFor();
+	// System.out.println("脚本正在执行中，请等待...");
+	// // }
+	// // pr.waitFor();
+	// // int return_value = pr.exitValue();
+	// // if (return_value == 0) {
+	// // System.out.println("执行完成.");
+	// // } else {
+	// // System.out.println("执行失败.");
+	// // }
+	// // BR.close();
+	// // pr.destroy();
+	// System.out.println("脚本 " + path + " 执行完毕");
+	// // Scanner sc = new Scanner(System.in);
+	// // sc.nextLine();
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 
 	// 启动程序
-	public void StartBat(String root) {
+	public void StartBat(String root, String mark) {
 		System.out.println("开始创建目录");
+		mkDirectory mk = new mkDirectory();
 		String mkDirectoryPath;
-		for (int i = 1; i <= Number/2; i++) {
-			// for (int j = 1; j <= 2; j++) {+ "/" + String.valueOf(j)
+		for (int i = 1; i <= Number / 2; i++) {
 			// 创建目录
 			mkDirectoryPath = root + String.valueOf(i);
-			if (mkDirectory(mkDirectoryPath)) {
+			boolean flag = mk.mkDirectory(mkDirectoryPath);
+			if (flag) {
 				System.out.println(mkDirectoryPath + "建立完毕");
 			} else {
 				System.out.println(mkDirectoryPath + "建立失败！此目录或许已经存在！");
 			}
-			// }
 		}
 		// 下载目标代码，分析，移动
-		GitDownLoad(root);
+		GitDownLoad(root, mark);
+	}
+
+	// 开始SAR分析脚本
+	public void start_Bat(String mark) {
+		readVersions();
+		if (mark.equals("SAR")) {
+			StartBat(SAR_StorePath_root, mark);
+		} else {
+			StartBat(nonSAR_StorePath_Root, mark);
+		}
 	}
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
 		Java_Bat jb = new Java_Bat();
-		// 获取版本和数目
 		jb.readVersions();
-		sc.nextLine();
-		// SAR
-		System.out.println("SAR分析");
-		jb.StartBat(jb.SAR_StorePath_root);
-		sc.nextLine();
+		jb.StartBat(jb.SAR_StorePath_root, "SAR");
+		// Scanner sc = new Scanner(System.in);
+		// Java_Bat jb = new Java_Bat();
+		// // 获取版本和数目
+		// jb.readVersions();
+		// sc.nextLine();
+		// // SAR
+		// System.out.println("SAR分析");
+		// jb.StartBat(jb.SAR_StorePath_root);
+		// sc.nextLine();
+
 		// non-SAR
 		// System.out.println("nonSAR分析");
 		// jb.StartBat(jb.non_SARPath_Root);
