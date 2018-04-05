@@ -30,7 +30,9 @@ public class random_selected {
 	public String useful_version[];
 	public String all_version[];
 
-	// 拼成一个长字符串，然后再拆分
+	StringBuffer pre_now = new StringBuffer();
+
+	// 1 拼成一个长字符串，然后再拆分
 	public void read_all_version(String path) {
 		StringBuffer concat_version = new StringBuffer();
 		File f = new File(path);
@@ -51,14 +53,14 @@ public class random_selected {
 			// System.out.println(all_version[0]);
 			// System.out.println(all_version[1]);
 			min_num = 1;
-			max_num = all_version.length;
+			max_num = all_version.length - 1;
 
 		} catch (Exception e) {
 			System.out.println("error1");
 		}
 	}
 
-	// 读useful_version
+	// 2 读useful_version
 	public void read_useful_version(String path) {
 		StringBuffer concat_version = new StringBuffer();
 		File f = new File(path);
@@ -79,7 +81,7 @@ public class random_selected {
 		}
 	}
 
-	// 针对没有useful—version的情况
+	// 3 针对没有useful—version的情况
 	public void read_version(String path) {
 		File f = new File(path);
 		try {
@@ -107,12 +109,10 @@ public class random_selected {
 	}
 
 	// 产生随机数
-	public void random_number() {
+	public String random_number() {
 		// 在 min_num 和 max_num 之间产生随机数x
 		// 产生后去all_version中查找字符串s 去userful_version中查找是否有 || 去记录随机数中找时候有
-		StringBuffer st = new StringBuffer();
 
-		StringBuffer pre_now = new StringBuffer();
 		ArrayList<String> list = new ArrayList<String>();
 		int total_number = 0;
 		while (true) {
@@ -122,18 +122,16 @@ public class random_selected {
 			if ((!isIn(all_version[i], useful_version)) && (!isInNum(i, list))) {
 				list.add(String.valueOf(i));
 				System.out.println(all_version[i]);
-				st.append(all_version[i] + "|");
-				pre_now.append(getPreviousVersion(all_version[i]) + "|" + all_version[i]);
-				pre_now.append("\r\n");
+				pre_now.append(getPreviousVersion(all_version[i]) + "###" + all_version[i] + "###");
+				// pre_now.append("\r\n");
 				total_number++;
 			}
 			if (total_number >= random_num) {
-				System.out.println(st.toString());
-				System.out.println();
-				System.out.println(pre_now.toString());
+				System.out.println("随机数产生完毕");
 				break;
 			}
 		}
+		return pre_now.toString();
 	}
 
 	public boolean isInNum(int i, ArrayList<String> li) {
@@ -177,19 +175,13 @@ public class random_selected {
 		try {
 			File file = new File(non_SAR_version);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < useful_version.length; i++) {
-				sb.append(getPreviousVersion(useful_version[i]) + "|" + useful_version[i]);
-				sb.append("\r\n");
-			}
-			String tempStr = sb.toString();
-			System.out.println();
-			System.out.println(tempStr);
-			String[] nonVersions = tempStr.split("|");
-			for (int i = 0; i < nonVersions.length; i++) {
-				bw.write(nonVersions[i]);
+			String[] tempStr = pre_now.toString().split("###");
+			System.out.println("chakan" + tempStr.length);
+			for (int i = 0; i < tempStr.length; i++) {
+				bw.write(tempStr[i]);
 				bw.newLine();
 			}
+			bw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

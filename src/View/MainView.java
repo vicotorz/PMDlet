@@ -1,7 +1,6 @@
 package View;
 
 import Tool.Java_Bat;
-import Tool.MoveFile;
 
 //程序主界面，用于收集路径信息
 //调用每个
@@ -44,14 +43,14 @@ public class MainView {
 		// // 6/////
 		Java_Bat jb = new Java_Bat();
 		// System.out.println("SAR分析");
-		// jb.start_Bat("SAR");
+		jb.start_Bat("SAR");
 		// System.out.println("nonSAR分析");
-		// jb.start_Bat("nonSAR");// nonSAR
+		jb.start_Bat("nonSAR");// nonSAR
 		// jb = null;
 
 		// 6.5//////
-		MoveFile mf = new MoveFile();
-		mf.startMove("SAR");
+		// MoveFile mf = new MoveFile();
+		// mf.startMove("SAR");
 		// mf.startMove("nonSAR");
 
 		// // 7/////

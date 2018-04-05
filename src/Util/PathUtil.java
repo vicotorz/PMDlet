@@ -53,7 +53,8 @@ public class PathUtil {
 	// 输入：(1) xxx_version.txt (2)xxx_useful_versions.txt(3)xxx-R.txt
 	// 输出：nonSAR_versions.txt(前一个，后一个版本)
 	// 【nonSAR】
-	public final String for_nonbat_path = RootPath + "nonSAR_versions" + appendix;
+	//systemml_for_bat_versions
+	public final String for_nonbat_path = RootPath + filename+"_for_bat_nonSAR_versions" + appendix;
 
 	// 【5】根据csv还原版本
 	// 【6】pmd分析项目,产生report
@@ -70,7 +71,7 @@ public class PathUtil {
 	public final String nonSAR_StorePath_Root = Path_Root + "\\\\" + nonSAR_filename + "/";// 存储non-SAR项目目录
 	public final String gitbatroot = RootPath + filename + "_bat/download_rename_check";
 	public final String finalbat = RootPath + filename + "_bat/" + filename + "_final.bat";
-	public final String nonbatroot = RootPath + filename + "_nonbat/" + filename + "_final.bat";
+	public final String nonbatroot = RootPath + filename + "_nonbat/download_rename_check_non";
 	public final String nonfinalbat = RootPath + filename + "_nonbat/" + filename + "_final.bat";
 
 	public static int refac_Number;// refactoring的个数

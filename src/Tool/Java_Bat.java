@@ -23,7 +23,8 @@ public class Java_Bat {
 	PathUtil pu = new PathUtil();
 	public final String root_path = pu.Path_Root;
 	public final String http_path = pu.http_path;
-	public final String path = pu.for_bat_path;// SAR
+	public final String path_SAR = pu.for_bat_path;// SAR
+	public final String path_nonSAR = pu.for_nonbat_path;
 	public final String SAR_StorePath_root = pu.SAR_StorePath_Root;
 	public final String nonSAR_StorePath_Root = pu.nonSAR_StorePath_Root;
 	public final String Path_Root = pu.Path_Root;
@@ -37,9 +38,14 @@ public class Java_Bat {
 	public final String nonFinalbat = pu.nonfinalbat;
 
 	// 读入版本信息
-	public void readVersions() {
+	public void readVersions(String mark) {
 		System.out.println("获取版本信息");
-		File file = new File(path);
+		File file;
+		if (mark.equals("SAR")) {
+			file = new File(path_SAR);
+		} else {
+			file = new File(path_nonSAR);
+		}
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line = br.readLine();
@@ -51,6 +57,7 @@ public class Java_Bat {
 			version_number = sb.toString().split("--");
 			Number = version_number.length;
 			pu.refac_Number = Number;
+			System.out.println(version_number.length);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,7 +82,9 @@ public class Java_Bat {
 				batfile = new File(nonFinalbat);
 			}
 			BufferedWriter batbw = new BufferedWriter(new FileWriter(batfile));
-			for (int i = 1; i <= Number / 2; i++) {
+			System.out.println("jianchayajiancha" + version_number.length);
+			int ver = 0;
+			for (int i = 1; i <= Number / 2; i++) {// 每一个文件夹
 				String batFilePath;
 				if (mark.equals("SAR")) {
 					batFilePath = gitbatroot + "_" + i + ".bat";
@@ -89,9 +98,7 @@ public class Java_Bat {
 				br.newLine();
 				String cdroot = Path_Root;
 				StringBuffer command = new StringBuffer();
-				int ver = 0;
 				for (int j = 1; j <= 2; j++) {
-					ver = (j == 1 ? i : i + 1);
 					String changedic = "cd " + root + i;// 切换到E://GitTest/i
 					String download = "git clone " + http_path + " " + version_number[ver];// 下载代码
 					String rename = "ren " + version_number[ver] + " [" + String.valueOf(j) + "]" + version_number[ver];// 改名
@@ -102,8 +109,9 @@ public class Java_Bat {
 					if (j == 1) {
 						command.append(" & ");
 					}
-					System.out.println(command);
+					ver++;
 				}
+				System.out.println(command);
 				br.write(command.toString());
 				br.close();
 			}
@@ -167,17 +175,18 @@ public class Java_Bat {
 
 	// 开始SAR分析脚本
 	public void start_Bat(String mark) {
-		readVersions();
 		if (mark.equals("SAR")) {
+			readVersions("SAR");
 			StartBat(SAR_StorePath_root, mark);
 		} else {
+			readVersions("nonSAR");
 			StartBat(nonSAR_StorePath_Root, mark);
 		}
 	}
 
 	public static void main(String[] args) {
 		Java_Bat jb = new Java_Bat();
-		jb.readVersions();
+		jb.readVersions("SAR");
 		jb.StartBat(jb.SAR_StorePath_root, "SAR");
 		// Scanner sc = new Scanner(System.in);
 		// Java_Bat jb = new Java_Bat();
