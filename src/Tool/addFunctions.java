@@ -102,7 +102,7 @@ public class addFunctions {
 	public void fetechpriorities() {
 		// ·ÃÎÊDÅÌµÄxxx
 		for (int o = 0; o < list.size(); o++) {
-			String path = basepath.concat(list.get(o));
+			String path = "./lib/".concat(list.get(o));
 			priorities(path, o);
 		}
 	}

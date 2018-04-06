@@ -13,10 +13,14 @@ public class MoveFile {
 	public String[] version_number;
 	PathUtil pu = new PathUtil();
 
-	public void readVersions() {
+	public void readVersions(String mark) {
 		System.out.println("获取版本信息");
-		File file = new File(pu.for_bat_path);
-		System.out.println(pu.for_bat_path);
+		File file;
+		if (mark.equals("SAR")) {
+			file = new File(pu.for_bat_path);
+		} else {
+			file = new File(pu.for_nonbat_path);
+		}
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line = br.readLine();
@@ -26,7 +30,7 @@ public class MoveFile {
 				line = br.readLine();
 			}
 			version_number = sb.toString().split("--");
-			pu.refac_Number = version_number.length;
+			pu.refac_Number = version_number.length/2;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,10 +46,13 @@ public class MoveFile {
 	public void copyUtil(String root, int Number) {
 		System.out.println(root + "," + Number);
 		CopyFileUtil cfu = new CopyFileUtil();
-		for (int i = 0; i < Number / 2; i++) {
-			String rootpath = root + String.valueOf(i + 1);// 上一级目录
+		int step = 1;
+		for (int i = 0; i < Number; i += 2) {
+			String rootpath = root + String.valueOf(step);// 上一级目录
+			int ver = 1;
 			for (int j = 1; j <= 2; j++) {
-				String path = root + String.valueOf(i + 1) + "/" + "[" + String.valueOf(j) + "]" + version_number[i];// 下一级目录
+				ver = (j == 1 ? i : i + 1);
+				String path = root + String.valueOf(step) + "/" + "[" + String.valueOf(j) + "]" + version_number[ver];// 下一级目录
 				String srcFileName = path + "/report.csv";
 				String destFileName;
 				if (path.toString().contains("[1]")) {
@@ -58,16 +65,17 @@ public class MoveFile {
 				// 待复制的文件名，目标文件名，如果目标文件存在，是否覆盖
 				cfu.copyFile(srcFileName, destFileName, true);
 			}
+			step++;
 		}
 	}
 
 	public void startMove(String mark) {
 		System.out.println("开始移动文件");
 		if (mark.equals("SAR")) {
-			readVersions();
+			readVersions("SAR");
 			copyUtil(pu.SAR_StorePath_Root, pu.refac_Number);
 		} else {
-			readVersions();
+			readVersions("nonSAR");
 			copyUtil(pu.nonSAR_StorePath_Root, pu.refac_Number);
 		}
 	}

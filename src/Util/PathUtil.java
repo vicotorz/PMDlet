@@ -53,8 +53,8 @@ public class PathUtil {
 	// 输入：(1) xxx_version.txt (2)xxx_useful_versions.txt(3)xxx-R.txt
 	// 输出：nonSAR_versions.txt(前一个，后一个版本)
 	// 【nonSAR】
-	//systemml_for_bat_versions
-	public final String for_nonbat_path = RootPath + filename+"_for_bat_nonSAR_versions" + appendix;
+	// systemml_for_bat_versions
+	public final String for_nonbat_path = RootPath + filename + "_for_bat_nonSAR_versions" + appendix;
 
 	// 【5】根据csv还原版本
 	// 【6】pmd分析项目,产生report
@@ -104,14 +104,14 @@ public class PathUtil {
 	// 【11.5】addFunctions.java
 	// 输入：rule_sets.txt
 	// 输出：priorities_information.csv
-	public final String rule_path = RootPath + "rule_sets.txt";
+	public final String rule_path = "./lib/rule_sets.txt";
 	public final String Priority_info = RootPath + "priorities_information.csv";
 	// ===============================以上实验结束=========================================
 
 	// 【1】SimplifyInfo.java（一次性）
 	// 输入:All.txt(准备好)
 	// 输出：pmd_info.csv
-	public final String All_path = RootPath + "All.txt";
+	public final String All_path = "./lib/All.txt";
 	public final String pmd_info_path = RootPath + "pmd_info.csv";
 
 	public HashSet<String> addRefactoringKey() {

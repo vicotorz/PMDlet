@@ -369,34 +369,33 @@ public class compare_excel {
 		}
 	}
 
-	public void startCompare() {
-		for (int t = 1; t <= 2; t++) {
-			String temppath;
-			String filename;
-			if (t == 1) {
-				temppath = SAR_Path;
-				filename = filename_SAR;
-				System.out.println("开始分析SAR版本");
-			} else {
-				temppath = nonSAR_Path;
-				filename = filename_nonSAR;
-				System.out.println("开始分析nonSAR版本");
-			}
-			for (int i = 1; i <= pu.refac_Number; i++) {
-				String p1 = temppath + i + "/pmd-report-1.csv";
-				String p2 = temppath + i + "/pmd-report-2.csv";
-				String p3 = temppath + i + filename;
-				// System.out.println(p1);
-				// System.out.println(p2);
-				// System.out.println(p3);
-				pre_file(p1, p2, p3);
-				initset();
-				// e.showAll();
-				Start();
-				System.out.println("处理完毕" + i);
-				final_actions();
-			}
+	public void startCompare(String mark) {
+		String temppath;
+		String filename;
+		if (mark.equals("SAR")) {
+			temppath = SAR_Path;
+			filename = filename_SAR;
+			System.out.println("开始分析SAR版本");
+		} else {
+			temppath = nonSAR_Path;
+			filename = filename_nonSAR;
+			System.out.println("开始分析nonSAR版本");
 		}
+		for (int i = 1; i <= pu.refac_Number; i++) {
+			String p1 = temppath + i + "/pmd-report-1.csv";
+			String p2 = temppath + i + "/pmd-report-2.csv";
+			String p3 = temppath + i + filename;
+			// System.out.println(p1);
+			// System.out.println(p2);
+			// System.out.println(p3);
+			pre_file(p1, p2, p3);
+			initset();
+			// e.showAll();
+			Start();
+			System.out.println("处理完毕" + i);
+			final_actions();
+		}
+
 	}
 
 	public static void main(String[] args) {
@@ -419,7 +418,8 @@ public class compare_excel {
 
 		// e.final_actions();
 		compare_excel e = new compare_excel();
-		e.startCompare();
+		e.startCompare("SAR");
+		e.startCompare("nonSAR");
 	}
 
 }

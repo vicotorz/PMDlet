@@ -1,6 +1,9 @@
 package View;
 
-import Tool.Java_Bat;
+import Tool.MoveFile;
+import Tool.SimplifyInfo;
+import Tool.addFunctions;
+import Tool.calculate_codesmells;
 
 //程序主界面，用于收集路径信息
 //调用每个
@@ -41,11 +44,11 @@ public class MainView {
 		// rs = null;
 		//
 		// // 6/////
-		Java_Bat jb = new Java_Bat();
+		// Java_Bat jb = new Java_Bat();
 		// System.out.println("SAR分析");
-		jb.start_Bat("SAR");
+		// jb.start_Bat("SAR");
 		// System.out.println("nonSAR分析");
-		jb.start_Bat("nonSAR");// nonSAR
+		// jb.start_Bat("nonSAR");// nonSAR
 		// jb = null;
 
 		// 6.5//////
@@ -55,28 +58,34 @@ public class MainView {
 
 		// // 7/////
 		// compare_excel e = new compare_excel();
-		// e.startCompare();
+		// MoveFile mf = new MoveFile();
+		// mf.readVersions("SAR");
+		// e.startCompare("SAR");
+		// mf.readVersions("nonSAR");
+		// e.startCompare("nonSAR");
 		// e = null;
 		//
 		// // 8////
 		// match_String ms = new match_String();
+		MoveFile mf = new MoveFile();
+		mf.readVersions("SAR");
 		// ms.startMatch();
 		// ms = null;
 		//
 		// // 9////
-		// calculate_codesmells ccs = new calculate_codesmells();
-		// ccs.Start("SAR");
-		// ccs.Start("nonSAR");// nonSAR
-		// ccs = null;
+		calculate_codesmells ccs = new calculate_codesmells();
+		ccs.Start("SAR");
+		ccs.Start("nonSAR");// nonSAR
+		ccs = null;
 		//
 		// // 10/////
-		// addFunctions af = new addFunctions();
-		// af.startAddFunction();
+		//addFunctions af = new addFunctions();
+		//af.startAddFunction();
 		// af = null;
 		//
 		// // 11/////
-		// SimplifyInfo sfi = new SimplifyInfo();
-		// sfi.startSimplifyInfo();
+		//SimplifyInfo sfi = new SimplifyInfo();
+		//sfi.startSimplifyInfo();
 		// sfi = null;
 	}
 }
