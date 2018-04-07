@@ -9,12 +9,18 @@ public class PathUtil {
 	// 脚本目录：E：//xx_Files/xx_bat/download_rename_check_[/d].bat
 	// 下载项目目录：E：//SAR_XX/[/d];E://non_SAR/[/d]
 	public final String Path_Root = "H:";
-	public final String filename = "systemml";
-	public final String Http = "https://github.com/apache/systemml.git";
+	public final String filename = "commons-io";// fastjson,junit4,commons-io
+	// https://github.com/alibaba/fastjson
+	// https://github.com/junit-team/junit4
+	// https://github.com/apache/commons-io
+	public final String Http = "https://github.com/apache/commons-io";
 	public final String RootPath = Path_Root + "\\" + filename + "_Files/";
 	public final String appendix = ".txt";
 	public final String csvappendix = ".csv";
 
+	// 【0】创建文件夹
+	public final String SARbatFolder = RootPath + filename + "_bat/";
+	public final String nonSARbatFolder = RootPath + filename + "_nonbat/";
 	// 【1】pick_up_refactorings
 	// 输入： xxx.txt 输出 ：(1)xxx-R.txt (2)xxx_mark.txt 作用： 挑选出Refactors
 	// (3)xxx-R-nonSAR.txt
@@ -70,16 +76,18 @@ public class PathUtil {
 	public final String SAR_StorePath_Root = Path_Root + "\\\\" + SAR_filename + "/";// 存储SAR项目目录
 	public final String nonSAR_StorePath_Root = Path_Root + "\\\\" + nonSAR_filename + "/";// 存储non-SAR项目目录
 	public final String gitbatroot = RootPath + filename + "_bat/download_rename_check";
-	public final String finalbat = RootPath + filename + "_bat/" + filename + "_final.bat";
+	// public final String finalbat = RootPath + filename + "_bat/" + filename +
+	// "_final.bat";
 	public final String nonbatroot = RootPath + filename + "_nonbat/download_rename_check_non";
-	public final String nonfinalbat = RootPath + filename + "_nonbat/" + filename + "_final.bat";
+	// public final String nonfinalbat = RootPath + filename + "_nonbat/" +
+	// filename + "_final.bat";
 
 	public static int refac_Number;// refactoring的个数
 
-	//【7.5】
-	//替换pmd中的不规范格式
-	//replaceExcel
-	
+	// 【7.5】
+	// 替换pmd中的不规范格式
+	// replaceExcel
+
 	// 【8】
 	// 移动文件
 	// MoveFile

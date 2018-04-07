@@ -1,6 +1,6 @@
 package View;
 
-import Tool.calculate_codesmells;
+import Tool.*;
 
 //程序主界面，用于收集路径信息
 //调用每个
@@ -12,7 +12,7 @@ public class MainView {
 		// 首先确定三个文件都已经存在
 		// 相关目录结构都存在
 		// 0//////////
-		// CreateFolder cf=new CreateFolder();
+		// CreateFolder cf = new CreateFolder();
 		// cf.PrepareDirectory();
 
 		// 1////////
@@ -70,9 +70,9 @@ public class MainView {
 		// ms = null;
 		//
 		// // 9////
-		calculate_codesmells ccs = new calculate_codesmells();
-		ccs.Start("SAR");
-		ccs.Start("nonSAR");// nonSAR
+		// calculate_codesmells ccs = new calculate_codesmells();
+		// ccs.Start("SAR");
+		// ccs.Start("nonSAR");// nonSAR
 		// ccs = null;
 		//
 		// // 10/////

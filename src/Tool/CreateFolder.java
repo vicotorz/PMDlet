@@ -14,7 +14,8 @@ public class CreateFolder {
 		PathUtil pu = new PathUtil();
 		mkDirectory mk = new mkDirectory();
 		mk.mkDirectory(pu.RootPath);
-		mk.mkDirectory(pu.gitbatroot);
+		mk.mkDirectory(pu.SARbatFolder);
+		mk.mkDirectory(pu.nonSARbatFolder);
 		mk.mkDirectory(pu.SAR_StorePath_Root);
 		mk.mkDirectory(pu.nonSAR_StorePath_Root);
 		System.out.println("´´½¨Íê±Ï");

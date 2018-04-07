@@ -32,10 +32,8 @@ public class Java_Bat {
 	public int Number;
 
 	public final String gitbatroot = pu.gitbatroot;
-	public final String FinalBat = pu.finalbat;
 
 	public final String gitnonbatroot = pu.nonbatroot;
-	public final String nonFinalbat = pu.nonfinalbat;
 
 	// 读入版本信息
 	public void readVersions(String mark) {
@@ -75,12 +73,6 @@ public class Java_Bat {
 			///////////////// 创建bat文件////////////////////////
 			StringBuffer batchBatCommand = new StringBuffer();
 			File batfile;
-			if (mark.equals("SAR")) {
-				batfile = new File(FinalBat);
-			} else {
-				batfile = new File(nonFinalbat);
-			}
-			BufferedWriter batbw = new BufferedWriter(new FileWriter(batfile));
 			System.out.println("jianchayajiancha" + version_number.length);
 			int ver = 0;
 			for (int i = 1; i <= Number / 2; i++) {// 每一个文件夹
@@ -114,8 +106,6 @@ public class Java_Bat {
 				br.write(command.toString());
 				br.close();
 			}
-			batbw.write(batchBatCommand.toString());
-			batbw.close();
 			System.out.println("写入脚本完毕");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
