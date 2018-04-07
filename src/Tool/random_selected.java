@@ -19,9 +19,9 @@ import Util.PathUtil;
  */
 public class random_selected {
 	PathUtil pu = new PathUtil();
-	public final String path1 = pu.version_path;// "D:\\junit4_version.txt";
-	public final String path2 = pu.useful_path;// "D:\\junit4_useful_versions.txt";
-	public final String path3 = pu.R_path_SAR;// "D:\\junit4-R.txt";
+	public final String path1 = pu.version_path;
+	public final String path2 = pu.useful_path;
+	public final String path3 = pu.R_path_SAR;
 	public final String non_SAR_version = pu.for_nonbat_path;// 输出选出的non-SAR版本
 	public int min_num;// 最小
 	public int max_num;// 最大
@@ -38,7 +38,6 @@ public class random_selected {
 		File f = new File(path);
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(f));
-
 			br.readLine();
 			String line = br.readLine();
 			while (line != null) {
@@ -50,8 +49,6 @@ public class random_selected {
 			// 拆分并装入到数组中
 			System.out.println(concat_version.toString());
 			all_version = concat_version.toString().split("\\|");
-			// System.out.println(all_version[0]);
-			// System.out.println(all_version[1]);
 			min_num = 1;
 			max_num = all_version.length - 1;
 
@@ -72,7 +69,6 @@ public class random_selected {
 				line = br.readLine();
 			}
 			br.close();
-
 			// 拆分并装入到数组中
 			useful_version = concat_version.toString().split("|");
 			random_num = useful_version.length;
@@ -96,12 +92,9 @@ public class random_selected {
 					String version = str.substring(4, str.length());
 					list.add(version);
 				}
-
 				str = br.readLine();
 			}
-			// System.out.println("111");
 			useful_version = list.toArray(new String[list.size()]);
-			// System.out.println("222");
 			random_num = useful_version.length;
 		} catch (Exception e) {
 			System.out.println("error3");
@@ -112,18 +105,15 @@ public class random_selected {
 	public String random_number() {
 		// 在 min_num 和 max_num 之间产生随机数x
 		// 产生后去all_version中查找字符串s 去userful_version中查找是否有 || 去记录随机数中找时候有
-
 		ArrayList<String> list = new ArrayList<String>();
 		int total_number = 0;
 		while (true) {
 			Random random = new Random();
 			int i = (random.nextInt(max_num) % (max_num - min_num + 1) + min_num) - 1;
-			// System.out.println(i);
 			if ((!isIn(all_version[i], useful_version)) && (!isInNum(i, list))) {
 				list.add(String.valueOf(i));
 				System.out.println(all_version[i]);
 				pre_now.append(getPreviousVersion(all_version[i]) + "###" + all_version[i] + "###");
-				// pre_now.append("\r\n");
 				total_number++;
 			}
 			if (total_number >= random_num) {
@@ -137,7 +127,6 @@ public class random_selected {
 	public boolean isInNum(int i, ArrayList<String> li) {
 		boolean flag = false;
 		String istring = String.valueOf(i);
-		// String[] liarray=(String[])li.toArray();
 		for (i = 0; i < li.size(); i++) {
 			if (li.get(i).equals(istring)) {
 				flag = true;

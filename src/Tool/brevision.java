@@ -19,18 +19,12 @@ import Util.PathUtil;
  */
 public class brevision {
 	PathUtil pu = new PathUtil();
-	public final String file_path_SAR = pu.R_path_SAR;// "D:\\commons-ionot-R.txt";//
-	// 所有截取的项目版本的有用信息 // not这里要看一下
-	// public final String file_path_nonSAR = pu.R_path_nonSAR;
-	public final String f_path = pu.version_path;// "D:\\commons-io_version.txt";//
-													// 所有项目的版本信息
-	public final String all_file_path = pu.file_path;// "D:\\commons-io.txt";//
-														// 整体项目信息
-
-	public final String useful_versions = pu.useful_path;// "E://commons-ionot/commons-ionot_useful_versions.txt";//
-															// 有用版本信息
-	public final String file_outpath = pu.csv_path;// "D:\\commons-ionot.csv";//
-													// 输出文件
+	public final String file_path_SAR = pu.R_path_SAR;
+	// 所有截取的项目版本的有用信息
+	public final String f_path = pu.version_path;
+	public final String all_file_path = pu.file_path;
+	public final String useful_versions = pu.useful_path;
+	public final String file_outpath = pu.csv_path;
 	public final String for_bat_path = pu.for_bat_path;
 
 	public String versions;
@@ -75,7 +69,6 @@ public class brevision {
 			String[] allversions = versions.split("\\|");
 
 			// 生成csv文件
-			// 这里可能出现问题
 			CsvWriter wr = new CsvWriter(file_outpath, ',', Charset.forName("GBK"));
 			contents = new String[get_total_num()][9];
 			String[] header = { "序号", "前一个版本", "当前版本", "作者", "日期", "作者标注信息", "修改的信息", "前一个版本修改信息", "具体变化的信息" };// 9个信息
@@ -84,7 +77,6 @@ public class brevision {
 			System.out.println("表头");
 
 			int version_num = 0;// 【序号】
-
 			// 一旦读入fasthjson的版本信息，就去versions找匹配的前一项，然后一起写入csv中
 			String line = reader.readLine();
 
@@ -124,12 +116,10 @@ public class brevision {
 				// 【序号】 【前一个版本】 【版本】
 				// 【作者】 【日期】 【信息】 【修改的信息】 ！！【变化的信息】
 				if (enter_flag) {
-					System.out.println("进入了！");
 					String author = reader.readLine().substring(line.indexOf(" ") + 1);
 					String date = reader.readLine().substring(line.indexOf(" ") + 1);
 					reader.readLine();
 					String info = reader.readLine();
-
 					reader.readLine();
 					reader.readLine();
 					reader.readLine();
@@ -178,8 +168,6 @@ public class brevision {
 
 	// 查找版本的以前
 	public String find_before_version(String ver, String[] allversions) {
-		// System.out.println(ver);
-		// System.out.println(allversions[1]);
 		String string = null;
 		for (int i = 0; i < allversions.length; i++) {
 			if (allversions[i].equals(ver)) {
@@ -214,7 +202,6 @@ public class brevision {
 						comment.append(line);
 						comment.append("\n");
 						line = br.readLine();
-
 					}
 					break;
 				}
@@ -224,8 +211,6 @@ public class brevision {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// Scanner sc=new Scanner(System.in);
-		// sc.nextLine();
 		System.out.println("#############");
 		System.out.println(comment.toString());
 		System.out.println("#############");
@@ -235,12 +220,9 @@ public class brevision {
 	public void writeuseful_versions() {
 		System.out.println("记录有用的版本信息");
 		File f = new File(useful_versions);
-
 		try {
 			BufferedWriter wr = new BufferedWriter(new FileWriter(f));
-
 			for (int index = 0; index < Total_number; index++) {
-				// System.out.println(index);
 				wr.write(contents[index][1] + "|" + contents[index][2] + "|");
 			}
 			wr.close();
@@ -249,8 +231,8 @@ public class brevision {
 			e.printStackTrace();
 		}
 	}
-	
-	public void startBreVision(){
+
+	public void startBreVision() {
 		checkfiles();
 		writeuseful_versions();
 	}

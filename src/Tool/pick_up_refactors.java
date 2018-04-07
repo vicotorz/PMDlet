@@ -35,7 +35,6 @@ public class pick_up_refactors {
 	ArrayList<String> routeString = new ArrayList<String>();
 	ArrayList<String> nonSAR = new ArrayList<String>();
 
-	// BufferedReader
 	BufferedReader reader;
 
 	ArrayList<String> marklist = new ArrayList<String>();// 用来记录自重构标签
@@ -50,19 +49,14 @@ public class pick_up_refactors {
 			reader = new BufferedReader(new FileReader(file));
 			String line = reader.readLine();
 			step_forward = 1;// readLine一行--------就记录一个前进步骤
-
 			while (line != null) {
-				// System.out.println("【读入】--" + line);
 				// 记录开头的位置
 				if (line.startsWith("版本:")) {
-					// System.out.println("！！！找到[版本]！！！");
-					// reader.mark(0);
 					step_forward = 1;
 					flag = true;
 				}
 
 				if (flag) {
-					// System.out.println("【写入】--" + line);
 					routeString.add(line);
 				}
 
@@ -77,14 +71,6 @@ public class pick_up_refactors {
 
 					if (Judge(line)) {
 						// 找对了
-						// System.out.println(line);
-						// System.out.println("找到REFACTOR信息！！！！");
-						// Scanner inn = new Scanner(System.in);
-						// showlist();
-						// inn.nextLine();
-						// System.out.println(flag);
-						// routeString.add(line);
-						// record_start_end();
 						// 继续记录下去
 						marklist.add("1");
 					} else {
@@ -95,19 +81,16 @@ public class pick_up_refactors {
 				}
 				line = reader.readLine();
 				if (flag) {
-					// System.out.println("前进");
 					step_forward++;
 				}
 			}
 
 		} catch (Exception e) {
-			// System.out.println("异常");
 			e.printStackTrace();
 		}
 	}
 
 	public boolean Judge(String line) {
-		// System.out.println("【判断】");
 		// 正则表达式，不区分大小写匹配
 		boolean flag = false;
 		Iterator it = StandardSet.iterator();
@@ -135,7 +118,6 @@ public class pick_up_refactors {
 	public void deletelist(int step) {
 		// System.out.println("删前查看");
 		// showlist();
-		// System.out.println(routeString.size() + " STEP " + step);
 		for (int i = routeString.size() - step + 1; i <= routeString.size() - 1; i++) {
 			nonSAR.add(routeString.get(i));
 		}
@@ -149,8 +131,6 @@ public class pick_up_refactors {
 		System.out.println("找到并记录输出");
 		System.out.println("调用reset方法");
 		try {
-			// Scanner inn=new Scanner(System.in);
-			// inn.nextLine();
 			File outputfile = new File(file_output_path_SAR);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile, true));
 			for (int i = 0; i <= routeString.size() - 1; i++) {
@@ -166,11 +146,7 @@ public class pick_up_refactors {
 			File outputfile_nonSAR = new File(file_output_path_nonSAR);
 			BufferedWriter wt = new BufferedWriter(new FileWriter(outputfile_nonSAR, true));
 			for (int i = 0; i <= nonSAR.size() - 1; i++) {
-				// Scanner in=new Scanner(System.in);
-				// in.nextLine();
 				wt.write(nonSAR.get(i));
-				// System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-				// System.out.println("****输出内容：" + routeString.get(i));
 				wt.write("\r\n");
 			}
 			wt.close();

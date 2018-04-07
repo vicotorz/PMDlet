@@ -64,8 +64,6 @@ public class SimplifyInfo {
 					// System.out.println("ruleset name");
 					String[] s = string.split("\"");
 					rulesetname = s[1].substring(0, s[1].length());
-
-					// System.out.println(rulesetname);
 					step++;
 				}
 
@@ -81,25 +79,17 @@ public class SimplifyInfo {
 				// 说明是普通的name
 				if (string.contains("name=") && !string.contains("<ruleset name=")
 						&& !string.contains("<property name=") && !properties_entry) {
-					// System.out.println("name");
-
 					String[] s = string.split("\"");
-					// System.out.println(string);
 					String rule_name = s[1].substring(0, s[1].length());
 					list.add(rule_name);
-
-					// System.out.println(rule_name);
 				}
 
 				// 说明是priority
 				if (string.contains("<priority>")) {
-					// System.out.println("priority");
 					String[] str = string.split(">");
 					String[] strr = str[1].split("<");
 					priority = strr[0];
-
 					list.add(priority);
-					// System.out.println(priority);
 				}
 
 				// 1)<d>xxx</d>
@@ -154,10 +144,6 @@ public class SimplifyInfo {
 		System.out.println(map.keySet());
 	}
 
-	// public int getLength(){
-	//
-	// }
-
 	// 写入文件中
 	// 写入格式 【rulesetName】
 	// name
@@ -168,13 +154,6 @@ public class SimplifyInfo {
 		try {
 			wr.writeRecord(header);
 			String[][] content = new String[286][3];
-			/**
-			 * Iterator iter = map.entrySet().iterator(); while (iter.hasNext())
-			 * { Map.Entry entry = (Map.Entry) iter.next(); Object key =
-			 * entry.getKey(); Object val = entry.getValue(); }
-			 * 
-			 * 
-			 */
 
 			Iterator iter = map.entrySet().iterator();
 			int index = 0;
@@ -223,7 +202,6 @@ public class SimplifyInfo {
 
 	// list中第一个是ruleset的描述 其他依次顺序为 名称 描述 优先级
 	public static void main(String[] args) {
-
 		SimplifyInfo sfi = new SimplifyInfo();
 		sfi.startSimplifyInfo();
 

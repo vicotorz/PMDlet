@@ -28,14 +28,14 @@ import Util.PathUtil;
 // 记录pmd检测到的去噪的code smells内容
 public class calculate_codesmells {
 	PathUtil pu = new PathUtil();
-	public final int file_number = pu.refac_Number;// 实验总数
-	public final String R_path = pu.R_path_SAR;// "D://junit4not-R.txt";
+	public final int file_number = pu.refac_Number;
+	public final String R_path = pu.R_path_SAR;
 	public final String nonR_path = pu.R_path_nonSAR;
-	public final String output_file_SAR = pu.info_Path;// "D://junit4not-information.csv";
+	public final String output_file_SAR = pu.info_Path;
 	public final String output_file_nonSAR = pu.non_info_Path;
-	public final String p1_1 = pu.SAR_StorePath_Root;// "E://junit4not/";
+	public final String p1_1 = pu.SAR_StorePath_Root;
 	public final String p1_2 = pu.nonSAR_StorePath_Root;
-	public final String p2_1 = pu.newFinalPath_SAR;// "/pmd-final-new.txt";
+	public final String p2_1 = pu.newFinalPath_SAR;
 	public final String p2_2 = pu.newFinalPath_nonSAR;
 
 	public ArrayList<String[][]> list;
@@ -65,8 +65,6 @@ public class calculate_codesmells {
 
 	// 统计版本，作者，修改数量(一次性读取)
 	public void record_version_author_number(String path, int file_number) {
-		// 访问fastjson-R.txt
-		// 依次访问即可
 		try {
 			File f = new File(path);
 			BufferedReader br = new BufferedReader(new FileReader(f));
@@ -79,9 +77,6 @@ public class calculate_codesmells {
 			boolean g1 = false;// 检测是否存在已添加
 			boolean g2 = false;// 检测是否存在已删除
 			while (str != null && index <= file_number) {
-				// System.out.println(str);
-				// Scanner sc=new Scanner(System.in);
-				// sc.nextLine();
 				if (str.startsWith("版本:")) {
 					// 有的版本出现没有记录modification的情况
 					if (version.size() != edit.size() && version.size() != rename.size()
@@ -98,13 +93,9 @@ public class calculate_codesmells {
 				if (str.startsWith("作者: ")) {
 					authors.add(str.substring(4, str.length()));
 				}
-
 				if (flag && (str.contains("已修改:") || str.contains("已删除:") || str.contains("已添加:")
 						|| str.contains("重命名:"))) {
-					// System.out.println("查找到修改");
-					// Scanner sc=new Scanner(System.in);
 					if (str.contains("重命名:")) {
-						// sc.nextLine();
 						g = true;
 					}
 					if (str.contains("已添加")) {
@@ -127,13 +118,11 @@ public class calculate_codesmells {
 					} else {
 						rename.add(0);
 					}
-
 					if (g1) {
 						addfile.add(1);
 					} else {
 						addfile.add(0);
 					}
-
 					if (g2) {
 						deletefile.add(1);
 					} else {
@@ -154,14 +143,7 @@ public class calculate_codesmells {
 				}
 
 				str = br.readLine();
-				// System.out.println("预读字符串："+str);
-				// System.out.println(str==null);
-				// System.out.println(str!=null);
-				// System.out.println(index<=file_number);
-				// System.out.println(index);
-				// System.out.println(file_number);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -170,7 +152,6 @@ public class calculate_codesmells {
 	// 将pmd中涉及的code smell放入到Set中，然后统计个数
 	// code smell类型 对应数量(单步调用)
 	public void put_code_smell_to_Set(String path) {
-		// System.out.println("调用");
 		Set<String> set = new HashSet<String>();
 		try {
 			File f = new File(path);
@@ -184,11 +165,9 @@ public class calculate_codesmells {
 				if (str.contains("【file1】")) {
 					file1_number++;
 				}
-
 				if (str.contains("【file2】")) {
 					file2_number++;
 				}
-
 				String[] sarray = str.split(",");
 				set.add(sarray[sarray.length - 1]);
 				str = br.readLine();
@@ -203,7 +182,6 @@ public class calculate_codesmells {
 				code_smells[i][2] = String.valueOf("0");
 				code_smells[i][3] = String.valueOf("0");
 			}
-
 			// 再次读取，统计
 			BufferedReader Zbr = new BufferedReader(new FileReader(f));
 			String string = Zbr.readLine();
@@ -211,14 +189,8 @@ public class calculate_codesmells {
 			while (string != null) {
 				String[] sarray = string.split(",");
 				for (int t = 0; t < set.size(); t++) {
-					// System.out.println(sarray[sarray.length-1]);
-					// System.out.println(code_smells[t][0]);
 					if (sarray[sarray.length - 1].equals(code_smells[t][0])) {
-						// System.out.println(sarray[sarray.length-1]);
-						// System.out.println(code_smells[t][0]);
-
 						code_smells[t][1] = String.valueOf(Integer.valueOf(code_smells[t][1]) + 1);
-						// System.out.println(code_smells[t][1]);
 						if (sarray[0].contains("【file1】")) {
 							code_smells[t][2] = String.valueOf(Integer.valueOf(code_smells[t][2]) + 1);
 						}
@@ -227,12 +199,9 @@ public class calculate_codesmells {
 							code_smells[t][3] = String.valueOf(Integer.valueOf(code_smells[t][3]) + 1);
 						}
 					}
-					// Scanner sc=new Scanner(System.in);
-					// sc.nextLine();
 				}
 				string = Zbr.readLine();
 			}
-			// System.out.println("添加code smell"+code_smells);
 			list.add(code_smells);
 			filenum.add(file2_number - file1_number);
 
@@ -255,30 +224,19 @@ public class calculate_codesmells {
 
 	// 访问addFuction文件
 	public void getPriority() {
-		// *************************************
 		addFunctions af = new addFunctions();
 		af.splitStrings();
 		af.fetechpriorities();
-
 		af.changeArray();
-		// System.out.println(af.getInfo().length);
 		ss = new String[af.getInfo().length][2];
 		ss = af.getInfo();
-		// System.out.println(ss[0][0]+" "+ss[0][1]);
-		// ************************************
+
 	}
 
 	// Return priority
 	public String RetrunPriority(String name) {
-		// "UseSingleton"
 		String instance = null;
-
-		// System.out.println(name);
-		// System.out.println(name.length());
 		instance = name.substring(1, name.length() - 1);
-		// System.out.println(instance);
-		// Scanner sc=new Scanner(System.in);
-		// sc.nextLine();
 
 		String priority = null;
 		for (int i = 0; i < ss.length; i++) {
@@ -287,16 +245,12 @@ public class calculate_codesmells {
 				break;
 			}
 		}
-		// System.out.println(priority);
 		return priority;
 	}
 
 	public void saveFile(String path, int file_number) {
 		getPriority();
 		try {
-			// System.out.println("存入！！");
-			// File f=new File(path);
-			// BufferedWriter bw=new BufferedWriter(new FileWriter(f));
 			// 将version authors edit list中的内容写进去
 			// 写入到csv文件中
 			System.out.println("fuck");
@@ -311,9 +265,7 @@ public class calculate_codesmells {
 
 			int size = file_number;
 			System.out.println(size);
-			// System.out.println("准备进入循环");
 			for (int i = 0; i < size; i++) {
-				// System.out.println("循环。。。");
 				int code_smell_size = list.get(i).length;
 				System.out.println(i + "---" + code_smell_size);
 				String[][] content;
@@ -340,9 +292,7 @@ public class calculate_codesmells {
 							if (deletefile.get(i) == 1) {
 								rn = rn + "|已删除";
 							}
-
 							content[j][8] = rn;
-
 						} else {
 							content[j][0] = "";
 							content[j][1] = "";
@@ -352,19 +302,13 @@ public class calculate_codesmells {
 							content[j][7] = "";
 							content[j][8] = "";
 						}
-
 						content[j][4] = list.get(i)[j][0];
 						content[j][5] = list.get(i)[j][1];
 						content[j][9] = list.get(i)[j][2];// 对应code-smell在file1中数量
 						content[j][10] = list.get(i)[j][3];// 对应code-smell在file2中数量
 						content[j][11] = String
 								.valueOf(Integer.valueOf(list.get(i)[j][3]) - Integer.valueOf(list.get(i)[j][2]));// 差值
-						// System.out.println("$%$%#$#@$@"+RetrunPriority(list.get(i)[j][0]));
 						content[j][12] = /* RetrunPriority(list.get(i)[j][4]) */RetrunPriority(list.get(i)[j][0]);
-						// System.out.println("qaaaaaaaa"+content[j][12]);
-						// System.out.println("====");
-						// System.out.println(content[j][0]+"--"+content[j][1]+"--"+content[j][2]+"--"+content[j][3]+"--"+content[j][4]+"--"+content[j][5]+"--"+content[j][6]+"--"+content[j][7]+"--"+content[j][8]+"--"+content[j][9]+"--"+content[j][10]+"--"+content[j][11]);
-						// System.out.println("====");
 						wr.writeRecord(content[j]);
 					}
 				} else {
@@ -393,10 +337,6 @@ public class calculate_codesmells {
 					content[0][10] = "";// 对应code-smell在file2中数量
 					content[0][11] = "";// 差值
 					content[0][12] = "";// priority
-					// System.out.println("第"+i+"出现问题");
-					// System.out.println("====");
-					// System.out.println(content[0][0]+"--"+content[0][1]+"--"+content[0][2]+"--"+content[0][3]+"--"+content[0][4]+"--"+content[0][5]+"--"+content[0][6]+"--"+content[0][7]+"--"+content[0][8]+"--"+content[0][9]+"--"+content[0][10]+"--"+content[0][11]);
-					// System.out.println("====");
 					wr.writeRecord(content[0]);
 				}
 			}
@@ -410,8 +350,6 @@ public class calculate_codesmells {
 
 	// 展示所有信息
 	public void showAll(int file_number) {
-		// System.out.println(version.size());
-		// System.out.println(version.get(0));
 		for (int num = 0; num < file_number; num++) {
 			System.out.println(version.get(num));
 			System.out.println(authors.get(num));
@@ -446,19 +384,13 @@ public class calculate_codesmells {
 				+ "---重命名数量：" + rename.size());
 		// 后两项
 		for (int fn = 1; fn <= file_number; fn++) {
-			// System.out.println("put开始");
 			put_code_smell_to_Set(path1 + fn + path2);
-			// System.out.println("put结束");
 		}
-		// System.out.println(ccs.list.size());
-		// System.out.println(ccs.list.get(0)[0][0]+ccs.list.get(0)[0][1]);
 		System.out.println("后两项读取完毕");
 		// ccs.showAll(file_number);
 		// 存入
-		// System.out.println(file_number);
 		saveFile(output_path, file_number);
 		System.out.println("存入完毕");
-		// ccs.showAll(file_number);
 	}
 
 	public static void main(String[] args) {

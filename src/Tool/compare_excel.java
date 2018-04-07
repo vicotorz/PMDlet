@@ -83,8 +83,6 @@ public class compare_excel {
 				set1.add(c1[2]);
 				line1 = reader1.readLine();
 			}
-
-			System.out.println("!!!!!!!!!!!!!!!!!!");
 			while (line2 != null) {
 				// System.out.println(line2);
 				String[] c2 = line2.split(",");
@@ -94,8 +92,10 @@ public class compare_excel {
 
 			System.out.println();
 			System.out.println("set1&set2全部加载完");
-			System.out.println("####" + set1.size());
-			System.out.println("####" + set2.size());
+			// Scanner sc = new Scanner(System.in);
+			// System.out.println(set1.size());
+			// System.out.println(set2.size());
+
 			// 1.补集1
 			N_instersection_set1.addAll(set1);
 			N_instersection_set1.removeAll(set2);
@@ -111,6 +111,11 @@ public class compare_excel {
 			// 4.交集
 			Instersection.addAll(set1);
 			Instersection.retainAll(set2);
+			// System.out.println(N_instersection_set1.size());
+			// System.out.println(N_instersection_set2.size());
+			// System.out.println(result.size());
+			// System.out.println(Instersection.size());
+			// sc.nextLine();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -182,7 +187,7 @@ public class compare_excel {
 			// 【2.1.1】一样 装入集合判断
 			// 【2.1.2】不一样
 			// 检测 reader_file2中的File下的String是否在set2中 记录【增加的code semll】+行信息
-			// Scanner sc=new Scanner(System.in);
+			// Scanner sc = new Scanner(System.in);
 			// sc.nextLine();
 			String str1 = reader_file1.readLine();
 			if (str1 != null) {
@@ -191,14 +196,14 @@ public class compare_excel {
 			String str2 = reader_file2.readLine();
 			str2 = str2.substring(str2.indexOf(","));
 
-			// System.out.println("@@str2读入"+str2);
+			System.out.println("@@str2读入" + str2);
 			while (str1 != null) {
-				// System.out.println("@@Str1读入"+str1);
+				System.out.println("@@Str1读入" + str1);
 				String[] s = str1.split(",");
 				// 先判断reader_file1的File中一栏String是不是在【set1】补集中
 				if (isInSet(s[2], 1)) {
 					System.out.println("【1】");
-					// Scanner scc=new Scanner(System.in);
+					// Scanner scc = new Scanner(System.in);
 					// scc.nextLine();
 					// 【1】如果在 记录【删减的code smell】+行信息
 					writer.write("\"【file1】【減少的code smell】    \"" + str1 + "\r\n");
@@ -208,8 +213,8 @@ public class compare_excel {
 						str1 = str1.substring(str1.indexOf(","));
 					}
 				} else {
-					System.out.println("【2】");
-					// Scanner scc=new Scanner(System.in);
+					// System.out.println("【2】");
+					// Scanner scc = new Scanner(System.in);
 					// scc.nextLine();
 					// 【2】不在set1中 记录这个时候的行信息
 					// 【2.1】检测reader_file2中的File下的String和reader_file1是不是一样的
@@ -265,14 +270,14 @@ public class compare_excel {
 							System.out.println(S_set2.size());
 							System.out.println(S_set1.isEmpty());
 							System.out.println(!S_set1.isEmpty());
-							// Scanner sc=new Scanner(System.in);
-							// sc.nextLine();
+							// Scanner sct = new Scanner(System.in);
+							// sct.nextLine();
 
 							// S_set1中有的是减少的
 							if (!S_set1.isEmpty()) {
-								// System.out.println("？？咋进来的？？"+!S_set1.isEmpty());
-								// Scanner scc=new Scanner(System.in);
-								// scc.nextLine();
+								System.out.println("？？咋进来的？？" + !S_set1.isEmpty());
+								// Scanner scct = new Scanner(System.in);
+								// scct.nextLine();
 								Iterator<String> it = S_set1.iterator();
 								while (it.hasNext()) {
 									System.out.println("写入1");

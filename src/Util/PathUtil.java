@@ -76,6 +76,10 @@ public class PathUtil {
 
 	public static int refac_Number;// refactoring的个数
 
+	//【7.5】
+	//替换pmd中的不规范格式
+	//replaceExcel
+	
 	// 【8】
 	// 移动文件
 	// MoveFile

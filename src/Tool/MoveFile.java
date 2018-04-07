@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import Util.CopyFileUtil;
 import Util.PathUtil;
+import Util.replaceExcel;
 
 public class MoveFile {
 	public String[] version_number;
@@ -30,7 +31,7 @@ public class MoveFile {
 				line = br.readLine();
 			}
 			version_number = sb.toString().split("--");
-			pu.refac_Number = version_number.length/2;
+			pu.refac_Number = version_number.length / 2;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,16 +45,14 @@ public class MoveFile {
 	// 将xx://yy/[1-9]/[1|2]中的report.csv 复制到 xx://yy/[1-9] 中并重命名 pmd-report-1 /
 	// pmd-report-2
 	public void copyUtil(String root, int Number) {
-		System.out.println(root + "," + Number);
 		CopyFileUtil cfu = new CopyFileUtil();
-		int step = 1;
-		for (int i = 0; i < Number; i += 2) {
-			String rootpath = root + String.valueOf(step);// 上一级目录
-			int ver = 1;
+		int step = 0;
+		for (int i = 1; i <= Number; i++) {
+			String rootpath = root + String.valueOf(i);// 上一级目录
 			for (int j = 1; j <= 2; j++) {
-				ver = (j == 1 ? i : i + 1);
-				String path = root + String.valueOf(step) + "/" + "[" + String.valueOf(j) + "]" + version_number[ver];// 下一级目录
+				String path = root + i + "/" + "[" + String.valueOf(j) + "]" + version_number[step];// 下一级目录
 				String srcFileName = path + "/report.csv";
+				String srcFileName_new = path + "/report-new.csv";
 				String destFileName;
 				if (path.toString().contains("[1]")) {
 					destFileName = rootpath + "/pmd-report-1.csv";
@@ -62,10 +61,17 @@ public class MoveFile {
 				}
 				System.out.println("[srcFileName]" + srcFileName);
 				System.out.println("[destFileName]" + destFileName);
+				System.out.println(srcFileName);
+				// 字符串替换
+				replaceExcel re = new replaceExcel();
+				re.ReplaceString(srcFileName, srcFileName_new);
+				System.out.println(srcFileName + "替换完毕");
 				// 待复制的文件名，目标文件名，如果目标文件存在，是否覆盖
-				cfu.copyFile(srcFileName, destFileName, true);
+				System.out.println("[源文件]" + srcFileName_new);
+				System.out.println("[目标文件]" + destFileName);
+				cfu.copyFile(srcFileName_new, destFileName, true);
+				step++;
 			}
-			step++;
 		}
 	}
 

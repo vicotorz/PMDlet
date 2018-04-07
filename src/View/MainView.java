@@ -1,8 +1,5 @@
 package View;
 
-import Tool.MoveFile;
-import Tool.SimplifyInfo;
-import Tool.addFunctions;
 import Tool.calculate_codesmells;
 
 //程序主界面，用于收集路径信息
@@ -67,8 +64,8 @@ public class MainView {
 		//
 		// // 8////
 		// match_String ms = new match_String();
-		MoveFile mf = new MoveFile();
-		mf.readVersions("SAR");
+		// MoveFile mf = new MoveFile();
+		// mf.readVersions("SAR");
 		// ms.startMatch();
 		// ms = null;
 		//
@@ -76,16 +73,16 @@ public class MainView {
 		calculate_codesmells ccs = new calculate_codesmells();
 		ccs.Start("SAR");
 		ccs.Start("nonSAR");// nonSAR
-		ccs = null;
+		// ccs = null;
 		//
 		// // 10/////
-		//addFunctions af = new addFunctions();
-		//af.startAddFunction();
+		// addFunctions af = new addFunctions();
+		// af.startAddFunction();
 		// af = null;
 		//
 		// // 11/////
-		//SimplifyInfo sfi = new SimplifyInfo();
-		//sfi.startSimplifyInfo();
+		// SimplifyInfo sfi = new SimplifyInfo();
+		// sfi.startSimplifyInfo();
 		// sfi = null;
 	}
 }

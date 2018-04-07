@@ -73,7 +73,6 @@ public class Java_Bat {
 		System.out.println("开始进入下载环节");
 		try {
 			///////////////// 创建bat文件////////////////////////
-			// Runtime runtime = Runtime.getRuntime();
 			StringBuffer batchBatCommand = new StringBuffer();
 			File batfile;
 			if (mark.equals("SAR")) {
@@ -188,20 +187,5 @@ public class Java_Bat {
 		Java_Bat jb = new Java_Bat();
 		jb.readVersions("SAR");
 		jb.StartBat(jb.SAR_StorePath_root, "SAR");
-		// Scanner sc = new Scanner(System.in);
-		// Java_Bat jb = new Java_Bat();
-		// // 获取版本和数目
-		// jb.readVersions();
-		// sc.nextLine();
-		// // SAR
-		// System.out.println("SAR分析");
-		// jb.StartBat(jb.SAR_StorePath_root);
-		// sc.nextLine();
-
-		// non-SAR
-		// System.out.println("nonSAR分析");
-		// jb.StartBat(jb.non_SARPath_Root);
-		// sc.nextLine();
-
 	}
 }

@@ -15,15 +15,11 @@ import Util.PathUtil;
 
 public class All_revisions {
 	PathUtil pu = new PathUtil();
-
 	public StringBuffer revisions = new StringBuffer();
 	final String file_path = pu.file_path;
 	final String file_output_path = pu.version_path;
-
 	int totalNumber = 0;
-
 	BufferedReader reader;
-
 	BufferedWriter writer;
 
 	// 返回子串
@@ -33,23 +29,18 @@ public class All_revisions {
 
 	// 获取版本号
 	public void fetch_revisions() {
-
 		try {
 			// 文件的操作
 			File file = new File(file_path);
 			reader = new BufferedReader(new FileReader(file));
-
 			String str = reader.readLine();
 			while (str != null) {
-
 				if (str.startsWith("版本:")) {
 					revisions.append(substr(str));
 					revisions.append("|");
 					totalNumber++;
 				}
-
 				str = reader.readLine();
-
 			}
 
 			File f = new File(file_output_path);
@@ -61,11 +52,9 @@ public class All_revisions {
 
 			writer.close();
 			reader.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void main(String[] args) {

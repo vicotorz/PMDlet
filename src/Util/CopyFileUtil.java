@@ -219,10 +219,6 @@ public class CopyFileUtil {
 	public static void copyFile() {
 		String srcFileName = "E://fastjson新工程（修改）/1/[1]a4807c9cb5cacf094f27d93b38b092aa55a04d90/.classpath";
 		String srcFileName2 = "E://fastjson新工程（修改）/1/[1]a4807c9cb5cacf094f27d93b38b092aa55a04d90/.project";
-		// C:\Users\dell\Desktop\fastjson非
-		// E://druid新工程/
-		// E:\fastjsonnot\1
-		// 121 31 25
 		String dest1 = "E://commons-ionot/";
 		String dest2 = "/.classpath";
 		String dest3 = "/.project";

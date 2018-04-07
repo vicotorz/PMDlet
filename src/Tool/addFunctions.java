@@ -14,9 +14,7 @@ import com.csvreader.CsvWriter;
 import Util.PathUtil;
 
 /**
- * 【输入】rule_sets.txt(事先准备好，准备一份就好)
- * 【输出】priorities_information.csv
- * 【时间】2016.11.22
+ * 【输入】rule_sets.txt(事先准备好，准备一份就好) 【输出】priorities_information.csv 【时间】2016.11.22
  * 
  * 【作用】对code_semll_information.csv文件进行读取，然后加列 "code_smell名称", "priority"
  * 
@@ -30,12 +28,12 @@ import Util.PathUtil;
  * 【操作前提】：有rule_sets.txt 以及各种xml文件
  */
 public class addFunctions {
-	PathUtil pu=new PathUtil();
-	public final String path = pu.rule_path;//"D:\\rule_sets.txt";
-	public final String basepath = pu.RootPath;//"D:\\\\";
-	public final String Csvpath = pu.Priority_info;//"D:\\priorities_information.csv";
+	PathUtil pu = new PathUtil();
+	public final String path = pu.rule_path;
+	public final String basepath = pu.RootPath;
+	public final String Csvpath = pu.Priority_info;
 
-	public ArrayList<String> list;// 装xml主题
+	public ArrayList<String> list;// xml主题
 
 	public ArrayList<ArrayList<String>> list_c;// 每个主题下的小内容
 
@@ -51,9 +49,7 @@ public class addFunctions {
 	}
 
 	// 1. 访问拆分
-	// 结果放在ArrayList中
-	// 两个ArrayList
-	// 前期处理了一下
+	// 访问rule set
 	public void splitStrings() {
 		File f = new File(path);
 		BufferedReader br;
@@ -69,11 +65,7 @@ public class addFunctions {
 			while (str != null) {
 				// <rule ref="rulesets/design.xml/FinalFieldCouldBeStatic"/>
 				String[] s = str.split("/");
-				// <rule ref="rulesets--design.xml--UseSingleton"-->
-				// System.out.println(s.length);
-				// System.out.println(s[0]+"--"+s[1]+"--"+s[2]+"--"+s[3]);
 				s[2] = s[2].substring(0, s[2].length() - 1);
-				// 这里涉及到
 				ss.add(s[1]);
 				if (size != ss.size()) {
 					// 新的主题
@@ -86,7 +78,6 @@ public class addFunctions {
 					al.add(s[2]);
 				} else {
 					al.add(s[2]);
-
 				}
 				str = br.readLine();
 			}
@@ -99,14 +90,15 @@ public class addFunctions {
 	}
 
 	// 2. 对规则进行具体文件访问
+	// PMD中具体的规则
 	public void fetechpriorities() {
-		// 访问D盘的xxx
 		for (int o = 0; o < list.size(); o++) {
 			String path = "./lib/".concat(list.get(o));
 			priorities(path, o);
 		}
 	}
 
+	// 访问具体规则
 	// 2.1 访问文件
 	// 每一个name都去list中对比，如果对比成功，放在list最后，以"-"拼接
 	// <rule name="MoreThanOneLogger"
@@ -122,22 +114,10 @@ public class addFunctions {
 			String priority = "";
 			while (string != null) {
 				if (string.contains("<rule") && !string.contains("set")) {
-					// 开始
-					// System.out.println(string);
-					//
-					// System.out.println("$$$$$$$$$$$$$");
-					// System.out.println(string);
 					String[] s = string.split("\"");
-					// System.out.println(s.length);
-					// System.out.println(s[0]);
-					// System.out.println(s[1]);
-					// System.out.println("-------------");
 					name = s[1].substring(0, s[1].length());
 				}
 				if (string.contains("<priority>")) {
-					// System.out.println(string);
-					// Scanner sc=new Scanner(System.in);
-					// sc.nextLine();
 					String[] str = string.split(">");
 					String[] strr = str[1].split("<");
 					priority = strr[0];
@@ -148,8 +128,6 @@ public class addFunctions {
 				}
 				string = br.readLine();
 			}
-			// Scanner sc=new Scanner(System.in);
-			// sc.nextLine();
 		} catch (Exception e) {
 			System.out.println("访问：" + path);
 			e.printStackTrace();
@@ -158,8 +136,6 @@ public class addFunctions {
 
 	// 2.1.1需要调用很多次
 	public void addstring(String name, String priority, int i) {
-		// System.out.println("调用了啊");
-		// System.out.println(name);
 		for (int n = 0; n < list_c.get(i).size(); n++) {
 			if (list_c.get(i).get(n).equals(name)) {
 				String content = list_c.get(i).get(n);
@@ -172,7 +148,6 @@ public class addFunctions {
 
 	// 2.5转成二维数组
 	public void changeArray() {
-		// list_c中的内容
 		try {
 			int number = 0;
 			for (int i = 0; i < list_c.size(); i++) {
@@ -195,14 +170,6 @@ public class addFunctions {
 		}
 	}
 
-//	// 3.读取文件加列
-//	// 【给两个文件后面加列】
-//	// information.csv
-//	// code_semll_information.csv
-//	public void addColumn() {
-//
-//	}
-
 	// 将priorities信息单独存入到csv文件中
 	public void wirtePriority() {
 		CsvWriter wr = new CsvWriter(Csvpath, ',', Charset.forName("GBK"));
@@ -210,7 +177,6 @@ public class addFunctions {
 		try {
 			wr.writeRecord(header);
 			String[][] content = new String[info.length][2];
-
 			// 赋初值
 			for (int i = 0; i < info.length; i++) {
 				content[i][0] = info[i][0];
@@ -218,29 +184,27 @@ public class addFunctions {
 				wr.writeRecord(content[i]);
 			}
 			wr.close();
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	// 展示所有信息
 	public void showAll() {
 		for (int u = 0; u < list_c.get(0).size(); u++) {
 			System.out.print(list_c.get(0).get(u) + " ");
 		}
 		try {
 			for (int i = 0; i < info.length; i++) {
-
 				System.out.println(info[i][0] + "  " + info[i][1]);
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void startAddFunction(){
+
+	public void startAddFunction() {
 		splitStrings();
 		fetechpriorities();
 		changeArray();
