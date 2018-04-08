@@ -1,4 +1,6 @@
 # PMDlet
 expension analysis of PMD reports
 
-PMD鎵╁睍鍒嗘瀽杞欢
+PMD_Draw的使用方法：
+path=‘路径’;PMD_Draw(path)
+

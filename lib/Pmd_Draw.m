@@ -15,5 +15,5 @@ for i=1:3:size(y,2)
     start=start+1;
 end
 xlabel('SAR');
-ylabell('Frequency');
+ylabel('Frequency');
 plot(X,Y)
