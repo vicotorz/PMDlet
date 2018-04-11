@@ -8,12 +8,12 @@ public class PathUtil {
 	// 一般目录：E：//xx_Files/
 	// 脚本目录：E：//xx_Files/xx_bat/download_rename_check_[/d].bat
 	// 下载项目目录：E：//SAR_XX/[/d];E://non_SAR/[/d]
-	public final String Path_Root = "H:";
-	public final String filename = "commons-io";// fastjson,junit4,commons-io
+	public String Path_Root = "H:";
+	public String filename = "commons-io";// fastjson,junit4,commons-io
 	// https://github.com/alibaba/fastjson
 	// https://github.com/junit-team/junit4
 	// https://github.com/apache/commons-io
-	public final String Http = "https://github.com/apache/commons-io";
+	public String Http = "https://github.com/apache/commons-io";
 	public final String RootPath = Path_Root + "\\" + filename + "_Files/";
 	public final String appendix = ".txt";
 	public final String csvappendix = ".csv";
