@@ -1,10 +1,10 @@
 # PMDlet
 Expension analysis of PMD reports
 
-* PMD_DrawµÄµ÷ÓÃ·½·¨£º
+* PMD_Drawçš„ä½¿ç”¨æ–¹æ³•
 >
 	path=xxx;
 	PMD_Draw(path);
 >
 
-![Õ¹Ê¾Í¼Æ¬](https://github.com/vicotorz/PMDlet/blob/master/show.png)
+![å›¾ç‰‡å±•ç¤º](https://github.com/vicotorz/PMDlet/blob/master/show.png)
