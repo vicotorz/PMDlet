@@ -1,6 +1,7 @@
 # PMDlet
-expension analysis of PMD reports
-
-PMD_Drawçš„è°ƒç”¨æ–¹æ³•
-path=åŠ è½½;PMD_Draw(path)
-
+Expension analysis of PMD reports
+* PMD_DrawµÄµ÷ÓÃ·½·¨£º
+>
+	path=¼ÓÔØ;
+	PMD_Draw(path);
+>
